@@ -1,0 +1,55 @@
+{
+  "intents": [
+    {
+      "intent": "AMAZON.StartOverIntent"
+    },
+    {
+      "intent": "AMAZON.RepeatIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "PlayerNumberSoloIntent"
+    },
+    {
+      "intent": "PlayerNumberSingleIntent",
+      "slots": [
+        {
+          "name": "Something",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "intent": "PlayerNumberIntent",
+      "slots": [
+        {
+          "name": "Players",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "AnswerIntent",
+      "slots": [
+        {
+          "name": "Answer",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+}
