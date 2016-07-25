@@ -4,7 +4,9 @@ AMAZON.StartOverIntent start
 AMAZON.StartOverIntent start new game
 
 PlayerNumberSoloIntent just me
-PlayerNumberSingleIntent {Something} player
+PlayerNumberSoloIntent a player
+PlayerNumberSoloIntent one player
+PlayerNumberSoloIntent single player
 PlayerNumberIntent {Players} people
 PlayerNumberIntent {Players} players
 

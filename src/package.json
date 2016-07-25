@@ -4,7 +4,8 @@
   "description": "A quizzy maths list game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./**/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,12 @@
     "url": "https://github.com/craigbilner/arithlistic/issues"
   },
   "homepage": "https://github.com/craigbilner/arithlistic#readme",
-  "devDependencies": {
+  "dependencies": {
     "alexa-sdk": "^1.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.1.1",
+    "eslint-config-airbnb-base": "^5.0.0",
+    "eslint-plugin-import": "^1.11.1"
   }
 }

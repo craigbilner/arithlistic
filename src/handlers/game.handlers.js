@@ -1,7 +1,8 @@
+const Alexa = require('alexa-sdk');
 const { GAME_STATES } = require('../enums');
 const handleUsersAnswer = require('../modules/handle-answer');
 
-modules.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
+module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AnswerIntent() {
     handleUsersAnswer({
       intent: this.event.intent,
@@ -14,29 +15,29 @@ modules.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       hasPassed: true,
     });
   },
-  'AMAZON.StartOverIntent'() {
+  'AMAZON.StartOverIntent': function StartOverIntent() {
     this.handler.state = GAME_STATES.START;
     this.emitWithState('StartGame', false);
   },
-  'AMAZON.RepeatIntent'() {
-    this.emit(':ask', this.attributes['speechOutput'], this.attributes['repromptText']);
+  'AMAZON.RepeatIntent': function RepeatIntent() {
+    this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptText);
   },
-  'AMAZON.HelpIntent'() {
+  'AMAZON.HelpIntent': function HelpIntent() {
     this.handler.state = GAME_STATES.HELP;
     this.emitWithState('helpTheUser');
   },
-  'AMAZON.StopIntent'() {
+  'AMAZON.StopIntent': function StopIntent() {
     this.handler.state = GAME_STATES.HELP;
     this.emit(':ask', 'Would you like to keep playing?');
   },
-  'AMAZON.CancelIntent'() {
-    this.emit(':tell', `Ok, let's play again soon.`);
+  'AMAZON.CancelIntent': function CancelIntent() {
+    this.emit(':tell', 'Ok, let\'s play again soon.');
   },
   Unhandled() {
-    var speechOutput = 'Try saying a number between 1 and infinity';
+    const speechOutput = 'Try saying a number between 1 and infinity';
     this.emit(':ask', speechOutput, speechOutput);
   },
   SessionEndedRequest() {
-    console.log(`Session ended in ${GAME_STATE.PLAYING} state: ${this.event.request.reason}`);
+    console.log(`Session ended in ${GAME_STATES.PLAYING} state: ${this.event.request.reason}`);
   },
 });

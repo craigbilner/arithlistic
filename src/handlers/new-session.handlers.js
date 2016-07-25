@@ -6,5 +6,5 @@ module.exports = {
     this.emitWithState('StartGame', {
       isNewGame: true,
     });
-  }
+  },
 };

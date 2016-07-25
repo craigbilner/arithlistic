@@ -2,7 +2,7 @@ function isAnswerSlotValid({ slots: { Answer } }) {
   const answerSlotFilled = Answer && !!Answer.value;
   const answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(Answer.value, 10));
 
-  return answerSlotIsInt && parseInt(Answer.value) > 0;
+  return answerSlotIsInt && parseInt(Answer.value, 10) > 0;
 }
 
 module.exports = function handleUserGuess({ hasPassed, intent }) {
