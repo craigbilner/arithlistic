@@ -34,11 +34,11 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.HELP, {
     this.handler.state = GAME_STATES.PLAYING;
     this.emitWithState('AMAZON.Continue');
   },
-  'Unhandled'() {
+  Unhandled() {
     const speechOutput = 'Say yes to continue, or no to end the game.';
     this.emit(':ask', speechOutput, speechOutput);
   },
-  'SessionEndedRequest'() {
+  SessionEndedRequest() {
     console.log(`Session ended in help state: ${this.event.request.reason}`);
   }
 });

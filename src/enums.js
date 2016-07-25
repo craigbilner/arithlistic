@@ -1,4 +1,5 @@
-export const GAME_STATES = {
+module.exports.GAME_STATES = {
   HELP: 'HELP',
   PLAYING: 'PLAYING',
+  START: 'START',
 };
