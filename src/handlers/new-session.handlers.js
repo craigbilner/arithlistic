@@ -1,4 +1,4 @@
-const { GAME_STATES } = require('../enums');
+const GAME_STATES = require('../enums').GAME_STATES;
 
 module.exports = {
   NewSession() {
@@ -7,4 +7,7 @@ module.exports = {
       isNewGame: true,
     });
   },
+  Unhandled() {
+    console.log('unhandled', arguments);
+  }
 };

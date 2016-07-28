@@ -1,9 +1,9 @@
 const Alexa = require('alexa-sdk');
-const { GAME_STATES } = require('../enums');
+const GAME_STATES = require('../enums').GAME_STATES;
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.START, {
-  StartGame({ isNewGame }) {
-    const speechOutputPrefix = isNewGame ? 'Welcome to Arithlistic.' : '';
+  StartGame(opts) {
+    const speechOutputPrefix = opts.isNewGame ? 'Welcome to Arithlistic.' : '';
     const speechOutput = `${speechOutputPrefix} I will ask you as many questions as you can answer 
     within one minute`;
     const repromptText = '';
