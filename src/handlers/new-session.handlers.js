@@ -7,6 +7,12 @@ module.exports = {
       isNewGame: true,
     });
   },
+  LaunchRequest() {
+    this.handler.state = GAME_STATES.START;
+    this.emitWithState('StartGame', {
+      isNewGame: true,
+    });
+  },
   Unhandled() {
     console.log('unhandled', arguments);
   }
