@@ -1,3 +1,5 @@
+process.env['PATH'] = `${process.env['PATH']}:${process.env['LAMBDA_TASK_ROOT']}`;
+
 const Alexa = require('alexa-sdk');
 const newSessionHandlers = require('./handlers/new-session.handlers');
 const startHandlers = require('./handlers/start.handlers');
