@@ -37,6 +37,7 @@ gulp.task('js', function() {
   return gulp.src([
     'index.js',
     'enums.js',
+    'responses.js',
     'handlers/**/*',
     'modules/**/*',
   ], { base: './' })
