@@ -6,4 +6,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   GameIntro() {
     this.emit(':ask', welcome());
   },
+  'AMAZON.YesIntent': function() {
+
+  },
 });

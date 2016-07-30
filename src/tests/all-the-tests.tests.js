@@ -9,7 +9,7 @@ const { GAME_STATES } = require('../enums');
 
 const sanitise = text => text.replace(/\n/g, '');
 
-const getOutputSpeech = ({ response:{ outputSpeech: { ssml } } }) =>
+const getOutputSpeech = ({ response: { outputSpeech: { ssml } } }) =>
   sanitise(ssml).match(/<speak>(.*)<\/speak>/i)[1].trim();
 const getGameState = ({ sessionAttributes: { STATE } }) => STATE;
 

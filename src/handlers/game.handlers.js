@@ -15,22 +15,22 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       hasPassed: true,
     });
   },
-  'AMAZON.StartOverIntent': function StartOverIntent() {
+  'AMAZON.StartOverIntent': function() {
     this.handler.state = GAME_STATES.START;
     this.emitWithState('StartGame', false);
   },
-  'AMAZON.RepeatIntent': function RepeatIntent() {
+  'AMAZON.RepeatIntent': function() {
     this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptText);
   },
-  'AMAZON.HelpIntent': function HelpIntent() {
+  'AMAZON.HelpIntent': function() {
     this.handler.state = GAME_STATES.HELP;
     this.emitWithState('helpTheUser');
   },
-  'AMAZON.StopIntent': function StopIntent() {
+  'AMAZON.StopIntent': function() {
     this.handler.state = GAME_STATES.HELP;
     this.emit(':ask', 'Would you like to keep playing?');
   },
-  'AMAZON.CancelIntent': function CancelIntent() {
+  'AMAZON.CancelIntent': function() {
     this.emit(':tell', 'Ok, let\'s play again soon.');
   },
   Unhandled() {

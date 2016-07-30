@@ -15,23 +15,23 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.HELP, {
 
     this.emit(':ask', speechOutput, repromptText);
   },
-  'AMAZON.RepeatIntent': function RepeatIntent() {
+  'AMAZON.RepeatIntent': function() {
     this.emitWithState('helpTheUser');
   },
-  'AMAZON.HelpIntent': function HelpIntent() {
+  'AMAZON.HelpIntent': function() {
     this.emitWithState('helpTheUser');
   },
-  'AMAZON.YesIntent': function YesIntent() {
+  'AMAZON.YesIntent': function() {
     this.handler.state = GAME_STATES.PLAYING;
     this.emitWithState('Start');
   },
-  'AMAZON.NoIntent': function NoIntent() {
+  'AMAZON.NoIntent': function() {
     this.emit(':tell', 'Fair enough, ciao!');
   },
-  'AMAZON.StopIntent': function StopIntent() {
+  'AMAZON.StopIntent': function() {
     this.emit(':ask', 'Would you like to keep playing?');
   },
-  'AMAZON.CancelIntent': function CancelIntent() {
+  'AMAZON.CancelIntent': function() {
     this.handler.state = GAME_STATES.PLAYING;
     this.emitWithState('AMAZON.Continue');
   },

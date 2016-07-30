@@ -11,5 +11,5 @@ module.exports = {
   },
   Unhandled() {
     console.log('unhandled', arguments);
-  }
+  },
 };

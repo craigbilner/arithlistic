@@ -1,6 +1,15 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "new-cap": 0
+    "new-cap": 0,
+    "func-names": 0,
+    "space-before-function-paren": 0,
+    "no-console": 0,
+    "prefer-rest-params": 0,
+    "import/no-extraneous-dependencies": 0
+  },
+  "globals": {
+    "describe": true,
+    "it": true
   }
 }
