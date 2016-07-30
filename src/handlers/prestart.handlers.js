@@ -9,4 +9,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   'AMAZON.YesIntent': function() {
     this.emit(':ask', res.howManyPlayers());
   },
+  Unhandled() {
+    console.log('unhandled', GAME_STATES.PRESTART);
+  }
 });

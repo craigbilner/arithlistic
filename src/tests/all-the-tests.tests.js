@@ -3,6 +3,7 @@ const skill = require('../index');
 const context = require('aws-lambda-mock-context');
 const sessionStartIntent = require('./event-samples/new-session/session-start.intent');
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
+const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const {
   welcome,
   howManyPlayers,
@@ -45,8 +46,11 @@ describe('Alexa, start game', () => {
           assert.deepEqual(gameState, GAME_STATES.PRESTART);
         }));
 
-    describe('one player', () => {
-
-    });
+    describe('one player', () =>
+      runIntent(onePlayerIntent)
+        .then(({ outputSpeech, gameState }) => {
+          assert.deepEqual(outputSpeech, sanitise(howManyPlayers()));
+          assert.deepEqual(gameState, GAME_STATES.PRESTART);
+        }));
   });
 });

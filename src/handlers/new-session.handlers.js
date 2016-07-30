@@ -10,6 +10,6 @@ module.exports = {
     this.emitWithState('GameIntro');
   },
   Unhandled() {
-    console.log('unhandled', arguments);
+    console.log('unhandled');
   },
 };
