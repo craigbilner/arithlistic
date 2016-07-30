@@ -7,9 +7,11 @@ const {
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
+const sanitise = text => text.replace(/\n/g, '');
+
 const getOutputSpeech = ({ response:{ outputSpeech: { ssml } } }) =>
-  ssml.replace(/\n\s/g, '').match(/<speak>(.*)<\/speak>/i)[1].trim();
-const getGameState = ({ sessionAttributes:{ STATE } }) => STATE;
+  sanitise(ssml).match(/<speak>(.*)<\/speak>/i)[1].trim();
+const getGameState = ({ sessionAttributes: { STATE } }) => STATE;
 
 describe('Alexa,', () => {
   it('start game', () => {
@@ -17,8 +19,8 @@ describe('Alexa,', () => {
 
     return context.Promise
       .then((obj) => {
-        assert.deepEqual(getOutputSpeech(obj), welcome({ isNewGame: true, }));
-        assert.deepEqual(getGameState(obj), GAME_STATES.PLAYING);
+        assert.deepEqual(getOutputSpeech(obj), sanitise(welcome()));
+        assert.deepEqual(getGameState(obj), GAME_STATES.PRESTART);
       })
       .catch(err => {
         throw new Error(err);

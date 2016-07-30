@@ -1,5 +1,4 @@
-module.exports.welcome = (opts) => {
-  const speechOutputPrefix = opts.isNewGame ? 'Welcome to Arithlistic. ' : '';
-
-  return `${speechOutputPrefix}I will ask you as many questions as you can answer within one minute`;
+module.exports.welcome = () => {
+  return `Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer 
+within one minute, would you like to play?`;
 };
