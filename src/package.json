@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./**/*.js",
-    "postinstall": "npm i alexa-sdk --prefix dist"
+    "postinstall": "npm i alexa-sdk --prefix dist",
+    "deploy": "gulp deploy"
   },
   "repository": {
     "type": "git",
@@ -28,9 +29,15 @@
     "alexa-sdk": "^1.0.3"
   },
   "devDependencies": {
+    "del": "^2.2.1",
     "eslint": "^3.1.1",
     "eslint-config-airbnb-base": "^5.0.0",
     "eslint-plugin-import": "^1.11.1",
-    "lambda-local": "0.0.10"
+    "gulp": "^3.9.1",
+    "gulp-install": "^0.6.0",
+    "gulp-zip": "^3.2.0",
+    "lambda-local": "0.0.10",
+    "node-aws-lambda": "^0.1.8",
+    "run-sequence": "^1.2.2"
   }
 }
