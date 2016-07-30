@@ -5,6 +5,7 @@ const sessionStartIntent = require('./event-samples/new-session/session-start.in
 const {
   welcome,
 } = require('../responses');
+const { GAME_STATES } = require('../enums');
 
 const getOutputSpeech = ({ response:{ outputSpeech: { ssml } } }) =>
   ssml.replace(/\n\s/g, '').match(/<speak>(.*)<\/speak>/i)[1].trim();
@@ -15,7 +16,10 @@ describe('Alexa,', () => {
     skill.handler(sessionStartIntent, context);
 
     return context.Promise
-      .then((obj) => assert.deepEqual(getOutputSpeech(obj), welcome({ isNewGame: true, })))
+      .then((obj) => {
+        assert.deepEqual(getOutputSpeech(obj), welcome({ isNewGame: true, }));
+        assert.deepEqual(getGameState(obj), GAME_STATES.PLAYING);
+      })
       .catch(err => {
         throw new Error(err);
       });
