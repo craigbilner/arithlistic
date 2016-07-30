@@ -9,6 +9,8 @@ const helpHandlers = require('./handlers/help.handlers');
 
 module.exports.handler = function (event, context) {
   const alexa = Alexa.handler(event, context);
+  alexa.appId = event.session.application.applicationId;
+
   alexa.registerHandlers(
     newSessionHandlers,
     prestartHandlers,
