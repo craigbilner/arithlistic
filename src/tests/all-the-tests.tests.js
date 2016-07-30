@@ -30,21 +30,23 @@ const runIntent = intent => new Promise(res => {
 });
 
 describe('Alexa, start game', () => {
-  it('Welcomes players and prestarts game', () => {
-    return runIntent(sessionStartIntent)
+  it('Welcomes players and prestarts game', () =>
+    runIntent(sessionStartIntent)
       .then(({ outputSpeech, gameState }) => {
         assert.deepEqual(outputSpeech, sanitise(welcome()));
         assert.deepEqual(gameState, GAME_STATES.PRESTART);
-      });
-  });
+      }));
 
   describe('Yes', () => {
-    it('asks how many players are playing', () => {
-      return runIntent(prestartYesIntent)
+    it('asks how many players are playing', () =>
+      runIntent(prestartYesIntent)
         .then(({ outputSpeech, gameState }) => {
           assert.deepEqual(outputSpeech, sanitise(howManyPlayers()));
           assert.deepEqual(gameState, GAME_STATES.PRESTART);
-        });
+        }));
+
+    describe('one player', () => {
+
     });
   });
 });

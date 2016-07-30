@@ -34,12 +34,10 @@
     "eslint": "^3.1.1",
     "eslint-config-airbnb-base": "^5.0.0",
     "eslint-plugin-import": "^1.11.1",
-    "fs": "0.0.2",
     "gulp": "^3.9.1",
     "gulp-install": "^0.6.0",
     "gulp-replace-task": "^0.11.0",
     "gulp-zip": "^3.2.0",
-    "lambda-local": "0.0.10",
     "mocha": "^2.5.3",
     "node-aws-lambda": "^0.1.8",
     "run-sequence": "^1.2.2"
