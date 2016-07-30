@@ -1,12 +1,12 @@
 const Alexa = require('alexa-sdk');
 const GAME_STATES = require('../enums').GAME_STATES;
-const welcome = require('../responses').welcome;
+const res = require('../responses');
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   GameIntro() {
-    this.emit(':ask', welcome());
+    this.emit(':ask', res.welcome());
   },
   'AMAZON.YesIntent': function() {
-
+    this.emit(':ask', res.howManyPlayers());
   },
 });
