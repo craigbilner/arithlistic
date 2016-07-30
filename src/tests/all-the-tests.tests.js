@@ -7,6 +7,7 @@ const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const {
   welcome,
   howManyPlayers,
+  whatIsYourName,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -31,7 +32,7 @@ const runIntent = intent => new Promise(res => {
 });
 
 describe('Alexa, start game', () => {
-  it('Welcomes players and prestarts game', () =>
+  it('Welcomes players, asks if they\'d like to play and prestarts game', () =>
     runIntent(sessionStartIntent)
       .then(({ outputSpeech, gameState }) => {
         assert.deepEqual(outputSpeech, sanitise(welcome()));
@@ -39,18 +40,20 @@ describe('Alexa, start game', () => {
       }));
 
   describe('Yes', () => {
-    it('asks how many players are playing', () =>
+    it('Asks how many players are playing', () =>
       runIntent(prestartYesIntent)
         .then(({ outputSpeech, gameState }) => {
           assert.deepEqual(outputSpeech, sanitise(howManyPlayers()));
           assert.deepEqual(gameState, GAME_STATES.PRESTART);
         }));
 
-    describe('one player', () =>
-      runIntent(onePlayerIntent)
-        .then(({ outputSpeech, gameState }) => {
-          assert.deepEqual(outputSpeech, sanitise(howManyPlayers()));
-          assert.deepEqual(gameState, GAME_STATES.PRESTART);
-        }));
+    describe('One player', () => {
+      it('Asks the players name', () =>
+        runIntent(onePlayerIntent)
+          .then(({ outputSpeech, gameState }) => {
+            assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
+            assert.deepEqual(gameState, GAME_STATES.PRESTART);
+          }));
+    });
   });
 });
