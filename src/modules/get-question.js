@@ -18,11 +18,11 @@ const difficultyLimit = {
 const questionPrefixes = {
   'beaufort scale': questionPart => questionPart === 'calm' ? '' : 'a ',
   'mohs scale': () => '',
-  'herculean labour': () => 'the number of the herculean labour where he ',
+  'herculean labour': () => 'the number of the herculean labour where he, ',
   'morse code': () => '',
-  'wedding gift': () => 'the number of years for a ',
+  'wedding gift': () => 'the number of years, for a, ',
   presidents: () => '',
-  'periodic table': () => 'the atomic number of ',
+  'periodic table': () => 'the atomic number of, ',
 };
 
 const questionSuffixes = {
@@ -117,7 +117,7 @@ const calculateQuestions = (operations, questions, compiledQuestion) => {
     const fstQ = _questions.pop();
     const sndQ = _questions.pop();
 
-    _compiledQuestion.question = `${fstQ.question} ${thisOperation.text} ${sndQ.question}`;
+    _compiledQuestion.question = `${fstQ.question}, ${thisOperation.text}, ${sndQ.question}`;
     _compiledQuestion.answer = thisOperation.invoke(fstQ.answer, sndQ.answer);
   } else {
 
