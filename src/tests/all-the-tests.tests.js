@@ -28,6 +28,7 @@ const runIntent = intent => new Promise(res => {
       res({
         outputSpeech: getOutputSpeech(obj),
         gameState: getAttribute(obj, 'STATE'),
+        names: getAttribute(obj, 'names'),
         currentAnswer: getAttribute(obj, 'currentAnswer'),
       });
     })
@@ -63,9 +64,10 @@ describe('Alexa, start game', () => {
       describe('My name is Craig', () => {
         it('Save name, start the game and ask Craig the first question', () =>
           runIntent(nameIntent)
-            .then(({ outputSpeech, gameState, currentAnswer }) => {
+            .then(({ outputSpeech, gameState, names, currentAnswer }) => {
               assert(!!outputSpeech);
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
+              assert.deepEqual(names[0], 'Craig');
               assert(currentAnswer !== undefined);
             }));
       });

@@ -20,7 +20,7 @@ const questionPrefixes = {
   'mohs scale': () => '',
   'herculean labour': () => 'the number of the herculean labour where he, ',
   'morse code': () => '',
-  'wedding gift': () => 'the number of years, for a, ',
+  'wedding gift': () => 'the number of years, for a ',
   presidents: () => '',
   'periodic table': () => 'the atomic number of, ',
 };

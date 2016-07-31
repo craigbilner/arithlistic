@@ -8,5 +8,5 @@ module.exports.howManyPlayers = () =>
 module.exports.whatIsYourName = number =>
   `Player ${number}, what is your name?`;
 
-module.exports.askQuestion = question =>
-  `What is ${question}?`;
+module.exports.askQuestion = (name, question) =>
+  `${name}, what is ${question}?`;
