@@ -10,6 +10,8 @@ PlayerNumberSoloIntent single player
 PlayerNumberIntent {Players} people
 PlayerNumberIntent {Players} players
 
+PlayerNameIntent my name is {Craig|Name}
+
 AnswerIntent the answer is {Answer}
 AnswerIntent my answer is {Answer}
 AnswerIntent is it {Answer}

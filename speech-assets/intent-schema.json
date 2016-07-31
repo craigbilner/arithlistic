@@ -44,6 +44,15 @@
     },
     {
       "intent": "PassIntent"
+    },
+    {
+      "intent": "PlayerNameIntent",
+      "slots": [
+        {
+          "name": "Name",
+          "type": "AMAZON.LITERAL"
+        }
+      ]
     }
   ]
 }
