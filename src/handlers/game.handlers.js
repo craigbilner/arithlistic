@@ -15,6 +15,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AnswerIntent() {
     const result = handleUsersAnswer({
       answer: this.event.request.intent.slots.Answer.value,
+      correctAnswer: this.attributes.currentAnswer,
       timeOfLastQuestion: this.attributes.timeOfLastQuestion,
       timeOfAnswer: this.event.request.timestamp,
       hasPassed: false,

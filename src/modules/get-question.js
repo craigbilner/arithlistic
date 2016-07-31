@@ -1,6 +1,5 @@
 const questionLists = require('../lists');
-
-const randomNumber = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+const randomNumber = require('./utils').randomNumber;
 
 const difficultyCount = {
   0: 2,
