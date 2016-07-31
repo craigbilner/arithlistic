@@ -1,0 +1,36 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "names": [
+        "craig"
+      ],
+      "STATE": "PLAYING",
+      "timeOfLastQuestion": "2016-07-31T16:58:47Z",
+      "currentAnswer": 6
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-31T16:59:00Z",
+    "intent": {
+      "name": "AnswerIntent",
+      "slots": {
+        "Answer": {
+          "name": "Answer",
+          "value": "5"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -5,6 +5,7 @@ const sessionStartIntent = require('./event-samples/new-session/session-start.in
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
+const answerIntent = require('./event-samples/game/answer.intent');
 const {
   welcome,
   howManyPlayers,
@@ -61,15 +62,23 @@ describe('Alexa, start game', () => {
             assert.deepEqual(gameState, GAME_STATES.PRESTART);
           }));
 
-      describe('My name is Craig', () => {
-        it('Save name, start the game and ask Craig the first question', () =>
+      describe('My name is Inigo Montoya', () => {
+        it('Save name, start the game and ask Inigo Montoya the first question', () =>
           runIntent(nameIntent)
             .then(({ outputSpeech, gameState, names, currentAnswer }) => {
-              assert.deepEqual(outputSpeech.split(',')[0], 'Craig');
+              assert.deepEqual(outputSpeech.split(',')[0], 'Inigo Montoya');
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
-              assert.deepEqual(names[0], 'Craig');
+              assert.deepEqual(names[0], 'Inigo Montoya');
               assert(currentAnswer !== undefined);
             }));
+
+        describe('The answer is five', () => {
+          it('Score game, say right or wrong and ask the next question', () =>
+            runIntent(answerIntent)
+              .then(({ outputSpeech, gameState, scores }) => {
+                console.log(outputSpeech);
+              }));
+        });
       });
     });
   });

@@ -8,20 +8,27 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
     const quizItem = getQuestion();
     this.attributes.currentAnswer = quizItem.answer;
+    this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
     this.emit(':ask', res.askQuestion(this.attributes.names[0], quizItem.question));
   },
   AnswerIntent() {
-    handleUsersAnswer({
-      intent: this.event.intent,
+    const result = handleUsersAnswer({
+      answer: this.event.request.intent.slots.Answer.value,
+      timeOfLastQuestion: this.attributes.timeOfLastQuestion,
+      timeOfAnswer: this.event.request.timestamp,
       hasPassed: false,
     });
+
+    const scores = this.attributes.playerScores || [];
+    this.attributes.playerScores = [(scores[0] || 0) + result.points];
+    const quizItem = getQuestion();
+    this.attributes.currentAnswer = quizItem.answer;
+
+    this.emit(':ask', res.scoreAndAskQuestion(result, this.attributes.names[0], quizItem.question));
   },
   PassIntent() {
-    handleUsersAnswer({
-      intent: this.event.intent,
-      hasPassed: true,
-    });
+    // move to next question here
   },
   'AMAZON.StartOverIntent': function() {
     this.handler.state = GAME_STATES.START;

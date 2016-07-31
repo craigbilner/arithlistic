@@ -1,4 +1,4 @@
-module.exports = {
+{
   "session": {
     "sessionId": "SessionId",
     "application": {
@@ -23,4 +23,4 @@ module.exports = {
     }
   },
   "version": "1.0"
-};
+}

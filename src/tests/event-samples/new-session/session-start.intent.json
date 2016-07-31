@@ -1,4 +1,4 @@
-module.exports = {
+{
   "session": {
     "new": true,
     "sessionId": "session1234",
@@ -15,4 +15,4 @@ module.exports = {
     "type": "LaunchRequest",
     "requestId": "request5678"
   }
-};
+}

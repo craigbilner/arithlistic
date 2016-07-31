@@ -1,4 +1,4 @@
-module.exports = {
+{
   "session": {
     "sessionId": "sessionId",
     "application": {
@@ -22,10 +22,10 @@ module.exports = {
       "slots": {
         "Name": {
           "name": "Name",
-          "value": "Craig"
+          "value": "Inigo Montoya"
         }
       }
     }
   },
   "version": "1.0"
-};
+}
