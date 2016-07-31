@@ -7,7 +7,7 @@ const handleUsersAnswer = require('../modules/handle-answer');
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
     const quizItem = getQuestion();
-    this.attributes['currentAnswer'] = quizItem.answer;
+    this.attributes.currentAnswer = quizItem.answer;
 
     this.emit(':ask', res.askQuestion(quizItem.question));
   },
