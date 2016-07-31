@@ -16,17 +16,21 @@ const sanitise = text => text.replace(/\n/g, '');
 
 const getOutputSpeech = ({ response: { outputSpeech: { ssml } } }) =>
   sanitise(ssml).match(/<speak>(.*)<\/speak>/i)[1].trim();
-const getGameState = ({ sessionAttributes: { STATE } }) => STATE;
+const getAttribute = ({ sessionAttributes }, attr) => sessionAttributes[attr];
 const runIntent = intent => new Promise(res => {
   const ctx = context();
   skill.handler(intent, ctx);
 
   ctx
     .Promise
-    .then(obj => res({
-      outputSpeech: getOutputSpeech(obj),
-      gameState: getGameState(obj),
-    }))
+    .then(obj => {
+      // console.log(obj);
+      res({
+        outputSpeech: getOutputSpeech(obj),
+        gameState: getAttribute(obj, 'STATE'),
+        currentAnswer: getAttribute(obj, 'currentAnswer'),
+      });
+    })
     .catch(err => {
       throw new Error(err);
     });
@@ -59,8 +63,10 @@ describe('Alexa, start game', () => {
       describe('My name is Craig', () => {
         it('Save name, start the game and ask Craig the first question', () =>
           runIntent(nameIntent)
-            .then(({ outputSpeech, gameState }) => {
-              console.log(outputSpeech);
+            .then(({ outputSpeech, gameState, currentAnswer }) => {
+              assert(!!outputSpeech);
+              assert.deepEqual(gameState, GAME_STATES.PLAYING);
+              assert(currentAnswer !== undefined);
             }));
       });
     });

@@ -35,14 +35,14 @@ const questionSuffixes = {
   'periodic table': () => '',
 };
 
-const generateLists = (listNames, count, lists = []) => {
+const generateLists = (listNames, count, lists) => {
   if (count === 0) {
     return lists;
   }
 
   const listIndx = randomNumber(0, listNames.length);
 
-  return generateLists(listNames, count - 1, lists.concat(listNames[listIndx]));
+  return generateLists(listNames, count - 1, (lists || []).concat(listNames[listIndx]));
 };
 
 const generateQuestions = (_questionLists, difficulty) => list => {
@@ -61,9 +61,76 @@ const generateQuestions = (_questionLists, difficulty) => list => {
   };
 };
 
-module.exports = (difficulty = 0) => {
-  const lists = generateLists(Object.keys(questionLists), difficultyCount[difficulty]);
-  const questions = lists.map(generateQuestions(questionLists, difficulty));
+const add = {
+  text: 'plus',
+  invoke: (a, b) => a + b,
+};
 
-  console.log(questions);
+const minus = {
+  text: 'minus',
+  invoke: (a, b) => a - b,
+};
+
+const multiply = {
+  text: 'multiply',
+  invoke: (a, b) => a * b,
+};
+
+const divide = {
+  text: 'divide',
+  invoke: (a, b) => a / b,
+};
+
+const pickOperations = (operations, count, pickedOperations) => {
+  if (count === 0) {
+    return pickedOperations;
+  }
+
+  const randomIndx = randomNumber(0, operations.length);
+  const newOperations = (pickedOperations || []).concat(operations[randomIndx]);
+
+  return pickOperations(operations, count - 1, newOperations);
+};
+
+const generateOperations = (difficulty) => {
+  const operationCount = difficultyCount[difficulty] - 1;
+  const operations = [add, minus];
+
+  if (difficulty > 1) {
+    operations.concat(multiply, divide);
+  }
+
+  return pickOperations(operations, operationCount);
+};
+
+const calculateQuestions = (operations, questions, compiledQuestion) => {
+  if (operations.length === 0) {
+    return compiledQuestion;
+  }
+
+  const _operations = operations.slice(0);
+  const thisOperation = _operations.pop();
+  const _questions = questions.slice(0);
+  const _compiledQuestion = compiledQuestion || {};
+
+  if (!_compiledQuestion.question) {
+    const fstQ = _questions.pop();
+    const sndQ = _questions.pop();
+
+    _compiledQuestion.question = `${fstQ.question} ${thisOperation.text} ${sndQ.question}`;
+    _compiledQuestion.answer = thisOperation.invoke(fstQ.answer, sndQ.answer);
+  } else {
+
+  }
+
+  return calculateQuestions(_operations, _questions, _compiledQuestion);
+};
+
+module.exports = (difficulty) => {
+  const _difficulty = difficulty || 0;
+  const lists = generateLists(Object.keys(questionLists), difficultyCount[_difficulty]);
+  const questions = lists.map(generateQuestions(questionLists, _difficulty));
+  const operations = generateOperations(_difficulty);
+
+  return calculateQuestions(operations, questions);
 };
