@@ -4,6 +4,7 @@ const context = require('aws-lambda-mock-context');
 const sessionStartIntent = require('./event-samples/new-session/session-start.intent');
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
+const nameIntent = require('./event-samples/prestart/name.intent');
 const {
   welcome,
   howManyPlayers,
@@ -54,6 +55,14 @@ describe('Alexa, start game', () => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
             assert.deepEqual(gameState, GAME_STATES.PRESTART);
           }));
+
+      describe('My name is Craig', () => {
+        it('Save name, start the game and ask Craig the first question', () =>
+          runIntent(nameIntent)
+            .then(({ outputSpeech, gameState }) => {
+              console.log(outputSpeech);
+            }));
+      });
     });
   });
 });

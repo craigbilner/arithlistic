@@ -1,8 +1,12 @@
 const Alexa = require('alexa-sdk');
 const GAME_STATES = require('../enums').GAME_STATES;
+const res = require('../responses');
 const handleUsersAnswer = require('../modules/handle-answer');
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
+  AskQuestion() {
+    this.emit(':ask', res.askQuestion());
+  },
   AnswerIntent() {
     handleUsersAnswer({
       intent: this.event.intent,

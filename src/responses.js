@@ -5,5 +5,8 @@ minute, would you like to play?`;
 module.exports.howManyPlayers = () =>
   `How many players will there be?`;
 
-module.exports.whatIsYourName = (number) =>
+module.exports.whatIsYourName = number =>
   `Player ${number}, what is your name?`;
+
+module.exports.askQuestion = () =>
+  `What is 1 + 1`;

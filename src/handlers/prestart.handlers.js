@@ -12,7 +12,11 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   PlayerNumberSoloIntent() {
     this.emit(':ask', res.whatIsYourName('one'));
   },
+  PlayerNameIntent() {
+    this.handler.state = GAME_STATES.PLAYING;
+    this.emitWithState('AskQuestion');
+  },
   Unhandled() {
     console.log('unhandled', GAME_STATES.PRESTART);
-  }
+  },
 });
