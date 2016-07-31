@@ -65,7 +65,7 @@ describe('Alexa, start game', () => {
         it('Save name, start the game and ask Craig the first question', () =>
           runIntent(nameIntent)
             .then(({ outputSpeech, gameState, names, currentAnswer }) => {
-              assert(!!outputSpeech);
+              assert.deepEqual(outputSpeech.split(',')[0], 'Craig');
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
               assert.deepEqual(names[0], 'Craig');
               assert(currentAnswer !== undefined);
