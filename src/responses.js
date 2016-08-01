@@ -1,3 +1,5 @@
+/* eslint-ignore max-len */
+
 'use strict';
 
 module.exports.welcome = () =>
@@ -15,8 +17,7 @@ module.exports.askQuestion = (name, question) =>
 
 module.exports.scoreAndAskQuestion = (name, question, result) => {
   const correctResponse = `Correct for ${result.points} points`;
-  const incorrectResponse = `Incorrect, the answer was ${result.answer}, you score, 
-${result.points} points`;
+  const incorrectResponse = `Incorrect, the answer was ${result.answer}, you score, ${result.points} points`;
   const response = result.isCorrect ? correctResponse : incorrectResponse;
 
   return `${response}. What is ${question}?`;
