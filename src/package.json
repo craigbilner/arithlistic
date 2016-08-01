@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha ./tests/*.tests.js",
     "lint": "eslint ./**/*.js",
-    "postinstall": "npm i alexa-sdk --prefix dist",
+    "postinstall": "npm i alexa-sdk seedrandom --prefix dist",
     "deploy": "gulp deploy",
     "debug-mocha": "iron-node node_modules/mocha/bin/_mocha ./tests/*.tests.js"
   },
@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/craigbilner/arithlistic#readme",
   "dependencies": {
-    "alexa-sdk": "^1.0.3"
+    "alexa-sdk": "^1.0.3",
+    "seedrandom": "^2.4.2"
   },
   "devDependencies": {
     "aws-lambda-mock-context": "^3.0.0",

@@ -7,7 +7,7 @@ const getQuestion = require('../modules/get-question');
 const handleUsersAnswer = require('../modules/handle-answer');
 
 function getAndEmitQuestion(response, opts) {
-  const quizItem = getQuestion();
+  const quizItem = getQuestion((new Date(this.event.request.timestamp)).getTime());
   this.attributes.currentAnswer = quizItem.answer;
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
@@ -20,7 +20,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     getAndEmitQuestion.call(this, res.askQuestion);
   },
   AnswerIntent() {
-    const result = handleUsersAnswer({
+    const result = handleUsersAnswer((new Date(this.event.request.timestamp)).getTime(), {
       answer: this.event.request.intent.slots.Answer.value,
       correctAnswer: this.attributes.currentAnswer,
       timeOfLastQuestion: this.attributes.timeOfLastQuestion,

@@ -37,16 +37,16 @@ const calcPointsForAnswer = (expected, actual) => {
   return points;
 };
 
-module.exports = (opts) => {
+module.exports = (seed, opts) => {
   const isCorrect = opts.correctAnswer === parseInt(opts.answer, 10);
   const timeDiff = (new Date(opts.timeOfAnswer) - new Date(opts.timeOfLastQuestion)) / 1000;
   const pointsForTime = calcPointsForTime(timeDiff);
   const pointsForAnswer = calcPointsForAnswer(opts.correctAnswer, opts.answer);
-  const randomPoints = randomNumber(-50, 50);
+  const rn = randomNumber(seed, -50, 50);
 
   return {
     isCorrect,
-    points: pointsForTime + pointsForAnswer + randomPoints,
+    points: pointsForTime + pointsForAnswer + rn.value,
     answer: opts.correctAnswer,
   };
 };

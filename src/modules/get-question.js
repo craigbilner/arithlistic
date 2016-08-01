@@ -36,26 +36,30 @@ const questionSuffixes = {
   'periodic table': () => '',
 };
 
-const generateLists = (listNames, count, lists) => {
+const generateLists = (seed, listNames, count, lists) => {
   if (count === 0) {
-    return lists;
+    return {
+      lists,
+      seed,
+    };
   }
 
-  const listIndx = randomNumber(0, listNames.length);
+  const rn = randomNumber(seed, 0, listNames.length);
 
-  return generateLists(listNames, count - 1, (lists || []).concat(listNames[listIndx]));
+  return generateLists(rn.seed, listNames, count - 1, (lists || []).concat(listNames[rn.value]));
 };
 
-const generateQuestions = (_questionLists, difficulty) => list => {
+const generateQuestions = (seed, _questionLists, difficulty) => list => {
   const questions = Object.keys(_questionLists[list]);
   const maxIndx = Math.min(difficultyLimit[difficulty], questions.length);
-  const randomQuestionIndx = randomNumber(0, maxIndx);
-  const questionPart = questions[randomQuestionIndx];
+  const rn = randomNumber(seed, 0, maxIndx);
+  const questionPart = questions[rn.value];
   const prefix = questionPrefixes[list](questionPart);
   const suffix = questionSuffixes[list](questionPart);
   const question = `${prefix}${questionPart}${suffix}`;
 
   return {
+    seed: rn.seed,
     list,
     question,
     answer: _questionLists[list][questionPart],
@@ -82,18 +86,18 @@ const divide = {
   invoke: (a, b) => a / b,
 };
 
-const pickOperations = (operations, count, pickedOperations) => {
+const pickOperations = (seed, operations, count, pickedOperations) => {
   if (count === 0) {
     return pickedOperations;
   }
 
-  const randomIndx = randomNumber(0, operations.length);
-  const newOperations = (pickedOperations || []).concat(operations[randomIndx]);
+  const rn = randomNumber(seed, 0, operations.length);
+  const newOperations = (pickedOperations || []).concat(operations[rn.value]);
 
-  return pickOperations(operations, count - 1, newOperations);
+  return pickOperations(rn.seed, operations, count - 1, newOperations);
 };
 
-const generateOperations = (difficulty) => {
+const generateOperations = (seed, difficulty) => {
   const operationCount = difficultyCount[difficulty] - 1;
   const operations = [add, minus];
 
@@ -101,7 +105,7 @@ const generateOperations = (difficulty) => {
     operations.concat(multiply, divide);
   }
 
-  return pickOperations(operations, operationCount);
+  return pickOperations(seed, operations, operationCount);
 };
 
 const calculateQuestions = (operations, questions, compiledQuestion) => {
@@ -127,11 +131,12 @@ const calculateQuestions = (operations, questions, compiledQuestion) => {
   return calculateQuestions(_operations, _questions, _compiledQuestion);
 };
 
-module.exports = (difficulty) => {
+module.exports = (seed, difficulty) => {
   const _difficulty = difficulty || 0;
-  const lists = generateLists(Object.keys(questionLists), difficultyCount[_difficulty]);
-  const questions = lists.map(generateQuestions(questionLists, _difficulty));
-  const operations = generateOperations(_difficulty);
+  const randomLists = generateLists(seed, Object.keys(questionLists), difficultyCount[_difficulty]);
+  const mapFunc = generateQuestions(randomLists.seed, questionLists, _difficulty);
+  const questions = randomLists.lists.map(mapFunc);
+  const operations = generateOperations(questions[0].seed, _difficulty);
 
   return calculateQuestions(operations, questions);
 };
