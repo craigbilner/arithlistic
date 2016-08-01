@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 const assert = require('assert');
 const skill = require('../index');
 const context = require('aws-lambda-mock-context');
@@ -30,7 +32,9 @@ const runIntent = intent => new Promise(res => {
         outputSpeech: getOutputSpeech(obj),
         gameState: getAttribute(obj, 'STATE'),
         names: getAttribute(obj, 'names'),
+        startTime: getAttribute(obj, 'startTime'),
         currentAnswer: getAttribute(obj, 'currentAnswer'),
+        scores: getAttribute(obj, 'playerScores'),
       });
     })
     .catch(err => {
@@ -65,18 +69,23 @@ describe('Alexa, start game', () => {
       describe('My name is Inigo Montoya', () => {
         it('Save name, start the game and ask Inigo Montoya the first question', () =>
           runIntent(nameIntent)
-            .then(({ outputSpeech, gameState, names, currentAnswer }) => {
+            .then(({ outputSpeech, gameState, names, startTime, currentAnswer }) => {
               assert.deepEqual(outputSpeech.split(',')[0], 'Inigo Montoya');
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
               assert.deepEqual(names[0], 'Inigo Montoya');
+              assert.deepEqual(startTime, '2016-07-31T00:06:26Z');
               assert(currentAnswer !== undefined);
             }));
 
         describe('The answer is five', () => {
-          it('Score game, say right or wrong and ask the next question', () =>
+          it('Score game, say answer is wrong and ask the next question', () =>
             runIntent(answerIntent)
               .then(({ outputSpeech, gameState, scores }) => {
-                console.log(outputSpeech);
+                const regex = /Incorrect, the answer was 6, you score, (.*) points. What is(.*)\?/;
+                assert(outputSpeech.match(regex).length);
+                assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                assert.deepEqual(scores.length, 1, 'has one score');
+                assert(Number.isFinite(scores[0]), 'score is a number');
               }));
         });
       });
