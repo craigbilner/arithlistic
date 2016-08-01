@@ -11,7 +11,10 @@
       "STATE": "PLAYING",
       "startTime": "2016-07-31T16:58:47Z",
       "timeOfLastQuestion": "2016-07-31T16:58:47Z",
-      "currentAnswer": 6
+      "currentAnswer": 10,
+      "playerScores": [
+        25
+      ]
     },
     "user": {
       "userId": "userId"
@@ -28,7 +31,7 @@
       "slots": {
         "Answer": {
           "name": "Answer",
-          "value": "5"
+          "value": "10"
         }
       }
     }

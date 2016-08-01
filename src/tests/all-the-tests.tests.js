@@ -7,7 +7,8 @@ const sessionStartIntent = require('./event-samples/new-session/session-start.in
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
-const answerIntent = require('./event-samples/game/answer.intent');
+const firstAnswerIntent = require('./event-samples/game/answer.intent');
+const secondAnswerIntent = require('./event-samples/game/answer2.intent');
 const {
   welcome,
   howManyPlayers,
@@ -79,7 +80,7 @@ describe('Alexa, start game', () => {
 
         describe('The answer is five', () => {
           it('Score game, say answer is wrong and ask the next question', () =>
-            runIntent(answerIntent)
+            runIntent(firstAnswerIntent)
               .then(({ outputSpeech, gameState, scores }) => {
                 const regex = /Incorrect, the answer was 6, you score, (.*) points. What is(.*)\?/;
                 assert(outputSpeech.match(regex).length);
@@ -87,6 +88,18 @@ describe('Alexa, start game', () => {
                 assert.deepEqual(scores.length, 1, 'has one score');
                 assert(Number.isFinite(scores[0]), 'score is a number');
               }));
+
+          describe('The answer is ten', () => {
+            it('Score game, say answer is right and ask the next question', () =>
+              runIntent(secondAnswerIntent)
+                .then(({ outputSpeech, gameState, scores }) => {
+                  const regex = /Correct for (.*) points. What is(.*)\?/;
+                  assert(outputSpeech.match(regex).length);
+                  assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                  assert.deepEqual(scores.length, 1, 'has one score');
+                  assert(Number.isFinite(scores[0]), 'score is a number');
+                }));
+          });
         });
       });
     });

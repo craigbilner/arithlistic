@@ -12,7 +12,7 @@ module.exports.askQuestion = (name, question) =>
   `${name}, what is ${question}?`;
 
 module.exports.scoreAndAskQuestion = (name, question, result) => {
-  const correctResponse = `Correct for ${result.points}`;
+  const correctResponse = `Correct for ${result.points} points`;
   const incorrectResponse = `Incorrect, the answer was ${result.answer}, you score, 
 ${result.points} points`;
   const response = result.isCorrect ? correctResponse : incorrectResponse;
