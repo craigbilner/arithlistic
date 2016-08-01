@@ -1,3 +1,5 @@
+'use strict';
+
 const questionLists = require('../lists');
 const randomNumber = require('./utils').randomNumber;
 

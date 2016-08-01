@@ -1,3 +1,5 @@
+'use strict';
+
 const GAME_STATES = require('../enums').GAME_STATES;
 const Alexa = require('alexa-sdk');
 

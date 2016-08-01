@@ -1,3 +1,5 @@
+'use strict';
+
 const randomNumber = require('./utils').randomNumber;
 
 const calcPointsForTime = duration => {

@@ -1,21 +1,23 @@
+'use strict';
+
 const Alexa = require('alexa-sdk');
 const GAME_STATES = require('../enums').GAME_STATES;
 const res = require('../responses');
 const getQuestion = require('../modules/get-question');
 const handleUsersAnswer = require('../modules/handle-answer');
 
-const getAndEmitQuestion = (handler, response, opts) => {
+function getAndEmitQuestion(response, opts) {
   const quizItem = getQuestion();
-  handler.attributes.currentAnswer = quizItem.answer;
-  handler.attributes.timeOfLastQuestion = handler.event.request.timestamp;
+  this.attributes.currentAnswer = quizItem.answer;
+  this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
-  handler.emit(':ask', response(handler.attributes.names[0], quizItem.question, opts));
-};
+  this.emit(':ask', response(this.attributes.names[0], quizItem.question, opts));
+}
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
     this.attributes.startTime = this.event.request.timestamp;
-    getAndEmitQuestion(this, res.askQuestion);
+    getAndEmitQuestion.call(this, res.askQuestion);
   },
   AnswerIntent() {
     const result = handleUsersAnswer({
@@ -29,7 +31,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     const scores = this.attributes.playerScores || [];
     this.attributes.playerScores = [(scores[0] || 0) + result.points];
 
-    getAndEmitQuestion(this, res.scoreAndAskQuestion, result);
+    getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
   },
   PassIntent() {
     // move to next question here
