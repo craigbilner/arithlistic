@@ -28,4 +28,26 @@ const plurals = (amount, word) => `${word}${amount === 1 ? '' : 's'}`
 const combinePlayerScores = (sentence, result) =>
   `${sentence}${result.name} scored ${result.score} ${plurals(result.score, 'point')}.`;
 
-module.exports.gameOver = players => `GAME OVER. ${players.reduce(combinePlayerScores, '')}`;
+const getMaxScore = (players, winner) => {
+  if (!players.length) {
+    return winner;
+  }
+
+  const _winner = winner || { score: 0 };
+  const _players = players.slice(0);
+  const thisPlayer = _players.pop();
+  const higherPlayer = thisPlayer.score > _winner.score ? thisPlayer : _winner;
+
+  return getMaxScore(_players, higherPlayer);
+};
+
+const getEndText = players => {
+  if (players.length === 1) {
+    return `You scored ${players[0].score} ${plurals(players[0].score, 'point')}`;
+  } else {
+    return `${getMaxScore(players).name} is the winner. ${players.reduce(combinePlayerScores, '')}`;
+  }
+};
+
+module.exports.gameOver = players =>
+  `GAME OVER. ${getEndText(players)}.`;

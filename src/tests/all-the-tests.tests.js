@@ -104,7 +104,7 @@ describe('Alexa, start game', () => {
               it('End game after it has lasted more than a minute', () =>
                 runIntent(thirdAnswerIntent)
                   .then(({ outputSpeech, gameState }) => {
-                    assert.deepEqual(outputSpeech, 'GAME OVER. craig scored 306 points.');
+                    assert.deepEqual(outputSpeech, 'GAME OVER. You scored 306 points.');
                     assert.deepEqual(gameState, GAME_STATES.GAME_OVER);
                   }));
             });
