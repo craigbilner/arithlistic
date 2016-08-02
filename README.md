@@ -10,13 +10,14 @@ Features:
 * Airbnb eslint config
 * Modular
 * TDD with tests taking form of; describe:user intent, it:response and actions
-* Gulp pipeline to easily deploy to AWS Lambda
+* Gulp pipeline for easy deployment to AWS Lambda
 * Functional Programming style (where possible due to OO and use of `this` in SDK)
 
 Todo:
 
 * Add end game
 * Add multiplayer bits
+* Add advanced difficulty bits
 * Add non-golden path scenarios
 * Get the thing published
 * Write tutorial
