@@ -3,4 +3,5 @@ module.exports.GAME_STATES = {
   PLAYING: 'PLAYING',
   PRESTART: 'PRESTART',
   START: 'START',
+  GAME_OVER: 'GAME_OVER',
 };

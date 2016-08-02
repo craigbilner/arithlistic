@@ -22,3 +22,10 @@ module.exports.scoreAndAskQuestion = (name, question, result) => {
 
   return `${response}. What is ${question}?`;
 };
+
+const plurals = (amount, word) => `${word}${amount === 1 ? '' : 's'}`
+
+const combinePlayerScores = (sentence, { name, score }) =>
+  `${sentence}${name} scored ${score} ${plurals(score, 'point')}.`;
+
+module.exports.gameOver = players => `GAME OVER. ${players.reduce(combinePlayerScores, '')}`;

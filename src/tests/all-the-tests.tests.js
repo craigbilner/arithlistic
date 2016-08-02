@@ -9,6 +9,7 @@ const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
 const firstAnswerIntent = require('./event-samples/game/answer.intent');
 const secondAnswerIntent = require('./event-samples/game/answer2.intent');
+const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
 const {
   welcome,
   howManyPlayers,
@@ -98,6 +99,15 @@ describe('Alexa, start game', () => {
                   assert.deepEqual(gameState, GAME_STATES.PLAYING);
                   assert.deepEqual(players[0].score, 311);
                 }));
+
+            describe('The answer is seven', () => {
+              it('End game after it has lasted more than a minute', () =>
+                runIntent(thirdAnswerIntent)
+                  .then(({ outputSpeech, gameState }) => {
+                    assert.deepEqual(outputSpeech, 'GAME OVER. craig scored 306 points.');
+                    assert.deepEqual(gameState, GAME_STATES.GAME_OVER);
+                  }));
+            });
           });
         });
       });

@@ -14,6 +14,10 @@ function getAndEmitQuestion(response, opts) {
   this.emit(':ask', response(this.attributes.players[0].name, quizItem.question, opts));
 }
 
+const isGameOver = (start, end) => {
+  return (new Date(end)) - (new Date(start)) > 60000;
+};
+
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
     this.attributes.startTime = this.event.request.timestamp;
@@ -30,7 +34,12 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
 
     this.attributes.players[0].score = this.attributes.players[0].score + result.points;
 
-    getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
+    if (isGameOver(this.attributes.startTime, this.event.request.timestamp)) {
+      this.handler.state = GAME_STATES.GAME_OVER;
+      this.emit(':tell', res.gameOver(this.attributes.players));
+    } else {
+      getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
+    }
   },
   PassIntent() {
     // move to next question here
