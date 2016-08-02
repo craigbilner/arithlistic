@@ -1,5 +1,11 @@
 # Arithlistic
 
+> What is gypsum on the mohs scale, plus, the atomic number of, helium?
+
+> The answer is five
+
+> Incorrect, the answer was 4, you score, -22 points. What is dot dot dot dash dash in morse code, minus, fluorite on the mohs scale?
+
 An alexa skill game involving quiz, lists and maths...could anything be better?
 
 So because the Amazon docs and samples are all a bit...old skool...and aren't aimed at a fully working skill implementation, this is my offering - let me know what you think in the Issues/PR section(s).
