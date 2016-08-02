@@ -15,7 +15,10 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
     this.emit(':ask', res.whatIsYourName('one'));
   },
   PlayerNameIntent() {
-    this.attributes.names = [this.event.request.intent.slots.Name.value];
+    this.attributes.players = [{
+      name: this.event.request.intent.slots.Name.value,
+      score: 0,
+    }];
     this.handler.state = GAME_STATES.PLAYING;
     this.emitWithState('AskQuestion');
   },

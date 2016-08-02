@@ -11,7 +11,7 @@ function getAndEmitQuestion(response, opts) {
   this.attributes.currentAnswer = quizItem.answer;
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
-  this.emit(':ask', response(this.attributes.names[0], quizItem.question, opts));
+  this.emit(':ask', response(this.attributes.players[0].name, quizItem.question, opts));
 }
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
@@ -28,8 +28,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       hasPassed: false,
     });
 
-    const scores = this.attributes.playerScores || [];
-    this.attributes.playerScores = [(scores[0] || 0) + result.points];
+    this.attributes.players[0].score = this.attributes.players[0].score + result.points;
 
     getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
   },

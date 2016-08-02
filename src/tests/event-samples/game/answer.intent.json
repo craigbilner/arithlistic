@@ -5,8 +5,11 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "names": [
-        "craig"
+      "players": [
+        {
+          "name": "craig",
+          "score": 0
+        }
       ],
       "STATE": "PLAYING",
       "startTime": "2016-07-31T16:58:47Z",
