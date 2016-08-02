@@ -5,8 +5,7 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "STATE": "PRESTART",
-      "playerCount": 1
+      "STATE": "PRESTART"
     },
     "user": {
       "userId": "userId"
@@ -17,13 +16,13 @@
     "type": "IntentRequest",
     "requestId": "reqId",
     "locale": "en-US",
-    "timestamp": "2016-07-31T00:06:26Z",
+    "timestamp": "2016-08-02T20:45:18Z",
     "intent": {
-      "name": "PlayerNameIntent",
+      "name": "PlayerNumberIntent",
       "slots": {
-        "Name": {
-          "name": "Name",
-          "value": "Inigo Montoya"
+        "Players": {
+          "name": "Players",
+          "value": "3"
         }
       }
     }
