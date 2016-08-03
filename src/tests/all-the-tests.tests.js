@@ -8,6 +8,7 @@ const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const threePlayerIntent = require('./event-samples/prestart/three-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
+const invalidNameIntent = require('./event-samples/prestart/invalid-name.intent');
 const name1Intent = require('./event-samples/prestart/name1.intent');
 const name2Intent = require('./event-samples/prestart/name2.intent');
 const name3Intent = require('./event-samples/prestart/name3.intent');
@@ -125,6 +126,22 @@ describe('Alexa, start game', () => {
             });
           });
         });
+
+        describe('Five', () => {
+
+        });
+      });
+
+      describe('Inigo Montoya is my name', () => {
+        it('Ask for the same players name again', () =>
+          runIntent(invalidNameIntent)
+            .then(({ outputSpeech, gameState, players, activePlayer }) => {
+              console.log(outputSpeech, gameState, players, activePlayer);
+            }));
+      });
+
+      describe('Bla bla bla', function() {
+
       });
     });
 
@@ -260,5 +277,13 @@ describe('Alexa, start game', () => {
         });
       });
     });
+
+    describe('Bla bla bla', () => {
+
+    });
+  });
+
+  describe('No', () => {
+
   });
 });
