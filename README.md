@@ -43,4 +43,4 @@ document.head.getElementsByTagName('style')[0].sheet.insertRule('.Simulator-tab 
 document.head.getElementsByTagName('style')[0].sheet.insertRule('.CodeMirror { width: 1500px !important; }', 2);
 ```
 
-After making sure it's all working "for real" then give it a spin on [Echoism](https://echosim.io/)
+After making sure it's all working "for real", give it a spin on [Echoism](https://echosim.io/)
