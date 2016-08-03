@@ -193,9 +193,8 @@ describe('Alexa, start game', () => {
               it('Score game, say answer is wrong and ask the next question', () =>
                 runIntent(multiFirstAnswerIntent)
                   .then(({ outputSpeech, gameState, players }) => {
-                    console.log(outputSpeech);
                     assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, 46 ' +
-                      'points. What is the atomic number of, hydrogen, plus, ' +
+                      'points. Prince Humperdinck, what is the atomic number of, hydrogen, plus, ' +
                       'George Washington\'s presidency?');
                     assert.deepEqual(gameState, GAME_STATES.PLAYING);
                     assert.deepEqual(players[0].score, 46);

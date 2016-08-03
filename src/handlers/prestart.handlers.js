@@ -39,6 +39,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
     }
 
     if (this.attributes.players.length === this.attributes.playerCount) {
+      this.attributes.activePlayer = 0;
       this.handler.state = GAME_STATES.PLAYING;
       this.emitWithState('AskQuestion');
     } else {

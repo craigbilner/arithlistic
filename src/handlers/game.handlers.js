@@ -6,12 +6,15 @@ const res = require('../responses');
 const getQuestion = require('../modules/get-question');
 const handleUsersAnswer = require('../modules/handle-answer');
 
+const getNextPlayer = (currentPlayer, totalPlayers) =>
+  currentPlayer >= (totalPlayers - 1) ? 0 : (currentPlayer + 1);
+
 function getAndEmitQuestion(response, opts) {
   const quizItem = getQuestion((new Date(this.event.request.timestamp)).getTime());
   this.attributes.currentAnswer = quizItem.answer;
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
-  this.emit(':ask', response(this.attributes.players[0].name, quizItem.question, opts));
+  this.emit(':ask', response(quizItem.question, opts));
 }
 
 const isGameOver = (start, end) => {
@@ -21,7 +24,7 @@ const isGameOver = (start, end) => {
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
     this.attributes.startTime = this.event.request.timestamp;
-    getAndEmitQuestion.call(this, res.askQuestion);
+    getAndEmitQuestion.call(this, res.askQuestion, this.attributes.players[0]);
   },
   AnswerIntent() {
     const result = handleUsersAnswer((new Date(this.event.request.timestamp)).getTime(), {
@@ -32,12 +35,19 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       hasPassed: false,
     });
 
-    this.attributes.players[0].score = this.attributes.players[0].score + result.points;
+    const activePlayerIndx = this.attributes.activePlayer;
+    this.attributes.players[activePlayerIndx].score =
+      this.attributes.players[activePlayerIndx].score + result.points;
 
     if (isGameOver(this.attributes.startTime, this.event.request.timestamp)) {
       this.handler.state = GAME_STATES.GAME_OVER;
       this.emit(':tell', res.gameOver(this.attributes.players));
     } else {
+      const nextPlayer = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
+      this.attributes.activePlayer = nextPlayer;
+      result.nextPlayer = this.attributes.players[nextPlayer];
+      result.playerCount = this.attributes.playerCount;
+
       getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
     }
   },
