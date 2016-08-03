@@ -34,8 +34,13 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 
 ## Tips:
 
-Use this in the [Alexa dev console](https://developer.amazon.com) so you can nicely scroll into view and see the JSON.
-I found this a much easier way to test (after the TDD tests *ahem* #obvs) because Alexa can never understand what I'm saying
+### Testing:
+
+Use the [Alexa dev console](https://developer.amazon.com) to test (after the TDD tests *ahem* #obvs). I found this a much easier way to test because Alexa can never understand what I'm saying.
+
+Generally say (type) the opposite thing or rubbish, capture the JSON call, stick it in your event-samples folder and write a test for it. This was useful to quickly pick up the intent Alexa wants to surface and the slot value, which you can't guess from just TDD.
+
+Use this cheeky hack so you can nicely scroll into view and see the JSON, because the boxes are a little on the small side...
 
 ```javascript
 document.head.getElementsByTagName('style')[0].sheet.insertRule('.AppManagementViewContainer { overflow: visible !important; }', 0);
