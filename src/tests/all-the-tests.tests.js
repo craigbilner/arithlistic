@@ -43,6 +43,7 @@ const runIntent = intent => new Promise(res => {
         gameState: getAttribute(obj, 'STATE'),
         playerCount: getAttribute(obj, 'playerCount'),
         players: getAttribute(obj, 'players'),
+        activePlayer: getAttribute(obj, 'activePlayer'),
         startTime: getAttribute(obj, 'startTime'),
         currentAnswer: getAttribute(obj, 'currentAnswer'),
       });
@@ -80,34 +81,37 @@ describe('Alexa, start game', () => {
       describe('My name is Inigo Montoya', () => {
         it('Save name, start the game and ask Inigo Montoya the first question', () =>
           runIntent(nameIntent)
-            .then(({ outputSpeech, gameState, players, startTime, currentAnswer }) => {
+            .then(({ outputSpeech, gameState, players, startTime, currentAnswer, activePlayer }) => {
               assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash in ' +
                 'morse code, minus, the number of years, for a cotton wedding anniversary?');
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
               assert.deepEqual(players[0].name, 'Inigo Montoya');
               assert.deepEqual(startTime, '2016-07-31T00:06:26Z');
               assert.deepEqual(currentAnswer, -1);
+              assert.deepEqual(activePlayer, 0);
             }));
 
         describe('The answer is five', () => {
           it('Score game, say answer is wrong and ask the next question', () =>
             runIntent(firstAnswerIntent)
-              .then(({ outputSpeech, gameState, players }) => {
+              .then(({ outputSpeech, gameState, players, activePlayer }) => {
                 assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
                   '46 points. What is the atomic number of, hydrogen, plus, ' +
                   'George Washington\'s presidency?');
                 assert.deepEqual(gameState, GAME_STATES.PLAYING);
                 assert.deepEqual(players[0].score, 46);
+                assert.deepEqual(activePlayer, 0);
               }));
 
           describe('The answer is ten', () => {
             it('Score game, say answer is right and ask the next question', () =>
               runIntent(secondAnswerIntent)
-                .then(({ outputSpeech, gameState, players }) => {
+                .then(({ outputSpeech, gameState, players, activePlayer }) => {
                   assert.deepEqual(outputSpeech, 'Correct for 286 points. What is the ' +
                     'atomic number of, hydrogen, plus, George Washington\'s presidency?');
                   assert.deepEqual(gameState, GAME_STATES.PLAYING);
                   assert.deepEqual(players[0].score, 332);
+                  assert.deepEqual(activePlayer, 0);
                 }));
 
             describe('The answer is seven', () => {
@@ -166,7 +170,7 @@ describe('Alexa, start game', () => {
             it('Sets the player, starts the game and asks the first player the ' +
               'first question', () =>
               runIntent(name3Intent)
-                .then(({ outputSpeech, gameState, players }) => {
+                .then(({ outputSpeech, gameState, players, activePlayer }) => {
                   assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash' +
                     ' in morse code, minus, the number of years, ' +
                     'for a cotton wedding anniversary?');
@@ -188,38 +192,42 @@ describe('Alexa, start game', () => {
                   ];
 
                   assert.deepEqual(players, expectedPlayers);
+                  assert.deepEqual(activePlayer, 0);
                 }));
 
             describe('The answer is five', () => {
               it('Score game, say answer is wrong and ask the next question', () =>
                 runIntent(multiFirstAnswerIntent)
-                  .then(({ outputSpeech, gameState, players }) => {
+                  .then(({ outputSpeech, gameState, players, activePlayer }) => {
                     assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, 46 ' +
                       'points. Prince Humperdinck, what is the atomic number of, hydrogen, plus, ' +
                       'George Washington\'s presidency?');
                     assert.deepEqual(gameState, GAME_STATES.PLAYING);
                     assert.deepEqual(players[0].score, 46);
+                    assert.deepEqual(activePlayer, 1);
                   }));
 
               describe('The answer is six', () => {
                 it('Score game, say answer is correct and ask the next question', () =>
                   runIntent(multiSecondAnswerIntent)
-                    .then(({ outputSpeech, gameState, players }) => {
+                    .then(({ outputSpeech, gameState, players, activePlayer }) => {
                       assert.deepEqual(outputSpeech, 'Correct for 286 points. Fezzik, what is ' +
                         'the atomic number of, hydrogen, plus, George Washington\'s presidency?');
                       assert.deepEqual(gameState, GAME_STATES.PLAYING);
                       assert.deepEqual(players[1].score, 286);
+                      assert.deepEqual(activePlayer, 2);
                     }));
 
                 describe('The answer is eight', () => {
                   it('Score game, say answer is correct and ask the next question', () =>
                     runIntent(multiThirdAnswerIntent)
-                      .then(({ outputSpeech, gameState, players }) => {
+                      .then(({ outputSpeech, gameState, players, activePlayer }) => {
                         assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
                           '46 points. Inigo Montoya, what is the atomic number of, hydrogen, plus, ' +
                           'George Washington\'s presidency?');
                         assert.deepEqual(gameState, GAME_STATES.PLAYING);
                         assert.deepEqual(players[2].score, 46);
+                        assert.deepEqual(activePlayer, 0);
                       }));
 
                   describe('The answer is ten', () => {
