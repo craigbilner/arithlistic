@@ -3,8 +3,7 @@
 'use strict';
 
 module.exports.welcome = () =>
-  `Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer within one 
-minute, would you like to play?`;
+  `Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer within one minute, would you like to play?`;
 
 module.exports.welcomePrompt = () =>
   'Your only options are yes or no, there\'s no red or blue pill';
