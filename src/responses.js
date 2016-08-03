@@ -32,6 +32,12 @@ module.exports.noRepeats = () =>
 module.exports.tryANumber = () =>
   'Try saying a number between 1 and infinity';
 
+module.exports.keepPlaying = () =>
+  'Would you like to keep playing?';
+
+module.exports.goodbye = () =>
+  'Ok, let\'s play again soon.';
+
 module.exports.scoreAndAskQuestion = (question, result) => {
   const correctResponse = `Correct for ${result.points} points`;
   const incorrectResponse = `Incorrect, the answer was ${result.answer}, you score, ${result.points} points`;
