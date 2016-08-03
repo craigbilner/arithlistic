@@ -1,0 +1,50 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "STATE": "PLAYING",
+      "playerCount": 3,
+      "activePlayer": 0,
+      "players": [
+        {
+          "name": "Inigo Montoya",
+          "score": 345
+        },
+        {
+          "name": "Prince Humperdinck",
+          "score": 286
+        },
+        {
+          "name": "Fezzik",
+          "score": 46
+        }
+      ],
+      "startTime": "2016-07-31T16:58:47Z",
+      "timeOfLastQuestion": "2016-07-31T16:58:47Z",
+      "currentAnswer": 10
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-31T17:03:10Z",
+    "intent": {
+      "name": "AnswerIntent",
+      "slots": {
+        "Answer": {
+          "name": "Answer",
+          "value": "7"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

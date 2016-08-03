@@ -27,7 +27,7 @@ module.exports.scoreAndAskQuestion = (question, result) => {
 const plurals = (amount, word) => `${word}${amount === 1 ? '' : 's'}`
 
 const combinePlayerScores = (sentence, result) =>
-  `${sentence}${result.name} scored ${result.score} ${plurals(result.score, 'point')}.`;
+  `${sentence} ${result.name} scored ${result.score} ${plurals(result.score, 'point')}.`;
 
 const getMaxScore = (players, winner) => {
   if (!players.length) {
@@ -44,11 +44,11 @@ const getMaxScore = (players, winner) => {
 
 const getEndText = players => {
   if (players.length === 1) {
-    return `You scored ${players[0].score} ${plurals(players[0].score, 'point')}`;
+    return `You scored ${players[0].score} ${plurals(players[0].score, 'point')}.`;
   } else {
-    return `${getMaxScore(players).name} is the winner. ${players.reduce(combinePlayerScores, '')}`;
+    return `${getMaxScore(players).name} is the winner.${players.reduce(combinePlayerScores, '')}`;
   }
 };
 
 module.exports.gameOver = players =>
-  `GAME OVER. ${getEndText(players)}.`;
+  `GAME OVER. ${getEndText(players)}`;

@@ -18,6 +18,7 @@ const multiFirstAnswerIntent = require('./event-samples/game/multip-answer.inten
 const multiSecondAnswerIntent = require('./event-samples/game/multip-answer2.intent.json');
 const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.intent.json');
 const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent.json');
+const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent.json');
 const {
   welcome,
   howManyPlayers,
@@ -240,6 +241,17 @@ describe('Alexa, start game', () => {
                           assert.deepEqual(gameState, GAME_STATES.PLAYING);
                           assert.deepEqual(players[0].score, 345);
                         }));
+
+                    describe('The answer is seven', () => {
+                      it('End game after it has lasted more than a minute', () =>
+                        runIntent(multiFifthAnswerIntent)
+                          .then(({ outputSpeech, gameState }) => {
+                            assert.deepEqual(outputSpeech, 'GAME OVER. Inigo Montoya is the ' +
+                              'winner. Inigo Montoya scored 379 points. Prince Humperdinck ' +
+                              'scored 286 points. Fezzik scored 46 points.');
+                            assert.deepEqual(gameState, GAME_STATES.GAME_OVER);
+                          }));
+                    });
                   });
                 });
               });
