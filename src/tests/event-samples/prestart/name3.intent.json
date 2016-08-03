@@ -1,0 +1,42 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "STATE": "PRESTART",
+      "playerCount": 3,
+      "players": [
+        {
+          "name": "Inigo Montoya",
+          "score": 0
+        },
+        {
+          "name": "Prince Humperdinck",
+          "score": 0
+        }
+      ]
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-31T00:06:26Z",
+    "intent": {
+      "name": "PlayerNameIntent",
+      "slots": {
+        "Name": {
+          "name": "Name",
+          "value": "Fezzik"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

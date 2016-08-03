@@ -8,6 +8,9 @@ const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const threePlayerIntent = require('./event-samples/prestart/three-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
+const name1Intent = require('./event-samples/prestart/name1.intent');
+const name2Intent = require('./event-samples/prestart/name2.intent');
+const name3Intent = require('./event-samples/prestart/name3.intent');
 const firstAnswerIntent = require('./event-samples/game/answer.intent');
 const secondAnswerIntent = require('./event-samples/game/answer2.intent');
 const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
@@ -34,6 +37,7 @@ const runIntent = intent => new Promise(res => {
       res({
         outputSpeech: getOutputSpeech(obj),
         gameState: getAttribute(obj, 'STATE'),
+        playerCount: getAttribute(obj, 'playerCount'),
         players: getAttribute(obj, 'players'),
         startTime: getAttribute(obj, 'startTime'),
         currentAnswer: getAttribute(obj, 'currentAnswer'),
@@ -61,11 +65,12 @@ describe('Alexa, start game', () => {
         }));
 
     describe('One player', () => {
-      it('Asks the players name', () =>
+      it('Sets the player count and asks the players name', () =>
         runIntent(onePlayerIntent)
-          .then(({ outputSpeech, gameState }) => {
+          .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
             assert.deepEqual(gameState, GAME_STATES.PRESTART);
+            assert.deepEqual(playerCount, 1);
           }));
 
       describe('My name is Inigo Montoya', () => {
@@ -115,12 +120,73 @@ describe('Alexa, start game', () => {
     });
 
     describe('Three players', () => {
-      it('Asks the first players name', () =>
+      it('Sets the player count and asks the first players name', () =>
         runIntent(threePlayerIntent)
-          .then(({ outputSpeech, gameState }) => {
+          .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
             assert.deepEqual(gameState, GAME_STATES.PRESTART);
+            assert.deepEqual(playerCount, 3);
           }));
+
+      describe('My name is Inigo Montoya', () => {
+        it('Set the player and asks the second players name', () =>
+          runIntent(name1Intent)
+            .then(({ outputSpeech, gameState, players }) => {
+              assert.deepEqual(outputSpeech, sanitise(whatIsYourName('two')));
+              assert.deepEqual(gameState, GAME_STATES.PRESTART);
+              assert.deepEqual(players, [{ name: 'Inigo Montoya', score: 0 }]);
+            }));
+
+        describe('My name is Prince Humperdinck', () => {
+          it('Sets the player and asks the third players name', () =>
+            runIntent(name2Intent)
+              .then(({ outputSpeech, gameState, players }) => {
+                assert.deepEqual(outputSpeech, sanitise(whatIsYourName('three')));
+                assert.deepEqual(gameState, GAME_STATES.PRESTART);
+
+                const expectedPlayers = [
+                  {
+                    name: 'Inigo Montoya',
+                    score: 0,
+                  },
+                  {
+                    name: 'Prince Humperdinck',
+                    score: 0,
+                  },
+                ];
+
+                assert.deepEqual(players, expectedPlayers);
+              }));
+
+          describe('My name is Fezzik', () => {
+            it('Sets the player and asks the third players name', () =>
+              runIntent(name3Intent)
+                .then(({ outputSpeech, gameState, players }) => {
+                  assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash' +
+                    ' in morse code, minus, the number of years, ' +
+                    'for a cotton wedding anniversary?');
+                  assert.deepEqual(gameState, GAME_STATES.PLAYING);
+
+                  const expectedPlayers = [
+                    {
+                      name: 'Inigo Montoya',
+                      score: 0,
+                    },
+                    {
+                      name: 'Prince Humperdinck',
+                      score: 0,
+                    },
+                    {
+                      name: 'Fezzik',
+                      score: 0,
+                    },
+                  ];
+
+                  assert.deepEqual(players, expectedPlayers);
+                }));
+          });
+        });
+      });
     });
   });
 });
