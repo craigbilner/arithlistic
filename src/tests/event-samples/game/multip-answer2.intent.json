@@ -11,7 +11,7 @@
       "players": [
         {
           "name": "Inigo Montoya",
-          "score": 0
+          "score": 46
         },
         {
           "name": "Prince Humperdinck",
@@ -41,7 +41,7 @@
       "slots": {
         "Answer": {
           "name": "Answer",
-          "value": "5"
+          "value": "6"
         }
       }
     }

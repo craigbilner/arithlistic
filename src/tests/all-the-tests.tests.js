@@ -17,6 +17,7 @@ const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
 const multiFirstAnswerIntent = require('./event-samples/game/multip-answer.intent.json');
 const multiSecondAnswerIntent = require('./event-samples/game/multip-answer2.intent.json');
 const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.intent.json');
+const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent.json');
 const {
   welcome,
   howManyPlayers,
@@ -199,6 +200,41 @@ describe('Alexa, start game', () => {
                     assert.deepEqual(gameState, GAME_STATES.PLAYING);
                     assert.deepEqual(players[0].score, 46);
                   }));
+
+              describe('The answer is six', () => {
+                it('Score game, say answer is correct and ask the next question', () =>
+                  runIntent(multiSecondAnswerIntent)
+                    .then(({ outputSpeech, gameState, players }) => {
+                      assert.deepEqual(outputSpeech, 'Correct for 286 points. Fezzik, what is ' +
+                        'the atomic number of, hydrogen, plus, George Washington\'s presidency?');
+                      assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                      assert.deepEqual(players[1].score, 286);
+                    }));
+
+                describe('The answer is eight', () => {
+                  it('Score game, say answer is correct and ask the next question', () =>
+                    runIntent(multiThirdAnswerIntent)
+                      .then(({ outputSpeech, gameState, players }) => {
+                        assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
+                          '46 points. Inigo Montoya, what is the atomic number of, hydrogen, plus, ' +
+                          'George Washington\'s presidency?');
+                        assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                        assert.deepEqual(players[2].score, 46);
+                      }));
+
+                  describe('The answer is ten', () => {
+                    it('Score game, say answer is correct and ask the next question', () =>
+                      runIntent(multiFourthAnswerIntent)
+                        .then(({ outputSpeech, gameState, players }) => {
+                          assert.deepEqual(outputSpeech, 'Correct for 299 points. Prince ' +
+                            'Humperdinck, what is the number of years, for a leather wedding ' +
+                            'anniversary, minus, the atomic number of, lithium?');
+                          assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                          assert.deepEqual(players[0].score, 345);
+                        }));
+                  });
+                });
+              });
             });
           });
         });

@@ -7,7 +7,7 @@
     "attributes": {
       "STATE": "PLAYING",
       "playerCount": 3,
-      "activePlayer": 2,
+      "activePlayer": 0,
       "players": [
         {
           "name": "Inigo Montoya",
@@ -19,12 +19,12 @@
         },
         {
           "name": "Fezzik",
-          "score": 0
+          "score": 46
         }
       ],
       "startTime": "2016-07-31T16:58:47Z",
       "timeOfLastQuestion": "2016-07-31T16:58:47Z",
-      "currentAnswer": 6
+      "currentAnswer": 10
     },
     "user": {
       "userId": "userId"
@@ -35,13 +35,13 @@
     "type": "IntentRequest",
     "requestId": "reqId",
     "locale": "en-US",
-    "timestamp": "2016-07-31T16:59:00Z",
+    "timestamp": "2016-07-31T16:59:10Z",
     "intent": {
       "name": "AnswerIntent",
       "slots": {
         "Answer": {
           "name": "Answer",
-          "value": "8"
+          "value": "10"
         }
       }
     }
