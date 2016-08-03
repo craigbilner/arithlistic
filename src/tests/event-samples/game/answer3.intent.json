@@ -5,10 +5,11 @@
       "applicationId": "appId"
     },
     "attributes": {
+      "playerCount": 1,
       "players": [
         {
           "name": "craig",
-          "score": 25
+          "score": 332
         }
       ],
       "STATE": "PLAYING",

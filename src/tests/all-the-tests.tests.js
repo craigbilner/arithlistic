@@ -14,6 +14,9 @@ const name3Intent = require('./event-samples/prestart/name3.intent');
 const firstAnswerIntent = require('./event-samples/game/answer.intent');
 const secondAnswerIntent = require('./event-samples/game/answer2.intent');
 const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
+const multiFirstAnswerIntent = require('./event-samples/game/multip-answer.intent.json');
+const multiSecondAnswerIntent = require('./event-samples/game/multip-answer2.intent.json');
+const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.intent.json');
 const {
   welcome,
   howManyPlayers,
@@ -103,14 +106,14 @@ describe('Alexa, start game', () => {
                   assert.deepEqual(outputSpeech, 'Correct for 286 points. What is the ' +
                     'atomic number of, hydrogen, plus, George Washington\'s presidency?');
                   assert.deepEqual(gameState, GAME_STATES.PLAYING);
-                  assert.deepEqual(players[0].score, 311);
+                  assert.deepEqual(players[0].score, 332);
                 }));
 
             describe('The answer is seven', () => {
               it('End game after it has lasted more than a minute', () =>
                 runIntent(thirdAnswerIntent)
                   .then(({ outputSpeech, gameState }) => {
-                    assert.deepEqual(outputSpeech, 'GAME OVER. You scored 306 points.');
+                    assert.deepEqual(outputSpeech, 'GAME OVER. You scored 613 points.');
                     assert.deepEqual(gameState, GAME_STATES.GAME_OVER);
                   }));
             });
@@ -159,7 +162,8 @@ describe('Alexa, start game', () => {
               }));
 
           describe('My name is Fezzik', () => {
-            it('Sets the player and asks the third players name', () =>
+            it('Sets the player, starts the game and asks the first player the ' +
+              'first question', () =>
               runIntent(name3Intent)
                 .then(({ outputSpeech, gameState, players }) => {
                   assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash' +
@@ -184,6 +188,19 @@ describe('Alexa, start game', () => {
 
                   assert.deepEqual(players, expectedPlayers);
                 }));
+
+            describe('The answer is five', () => {
+              it('Score game, say answer is wrong and ask the next question', () =>
+                runIntent(multiFirstAnswerIntent)
+                  .then(({ outputSpeech, gameState, players }) => {
+                    console.log(outputSpeech);
+                    assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, 46 ' +
+                      'points. What is the atomic number of, hydrogen, plus, ' +
+                      'George Washington\'s presidency?');
+                    assert.deepEqual(gameState, GAME_STATES.PLAYING);
+                    assert.deepEqual(players[0].score, 46);
+                  }));
+            });
           });
         });
       });

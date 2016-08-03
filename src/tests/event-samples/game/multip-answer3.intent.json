@@ -5,14 +5,22 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "playerCount": 1,
+      "STATE": "PLAYING",
+      "playerCount": 3,
       "players": [
         {
-          "name": "craig",
+          "name": "Inigo Montoya",
+          "score": 0
+        },
+        {
+          "name": "Prince Humperdinck",
+          "score": 0
+        },
+        {
+          "name": "Fezzik",
           "score": 0
         }
       ],
-      "STATE": "PLAYING",
       "startTime": "2016-07-31T16:58:47Z",
       "timeOfLastQuestion": "2016-07-31T16:58:47Z",
       "currentAnswer": 6
