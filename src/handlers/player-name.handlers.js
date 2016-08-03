@@ -35,4 +35,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, {
   Unhandled() {
     this.emit(':ask', res.namePrompt(), res.namePrompt());
   },
+  SessionEndedRequest() {
+    console.log(`Session ended in ${GAME_STATES.PLAYER_NAME} state: ${this.event.request.reason}`);
+  },
 });

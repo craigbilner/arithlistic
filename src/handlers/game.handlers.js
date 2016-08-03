@@ -53,26 +53,23 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     // move to next question here
   },
   'AMAZON.StartOverIntent': function() {
-    this.handler.state = GAME_STATES.START;
-    this.emitWithState('StartGame', false);
+    this.handler.state = GAME_STATES.PRESTART;
+    this.emitWithState('GameIntro');
   },
   'AMAZON.RepeatIntent': function() {
-    this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptText);
+    this.emit(':tell', res.noRepeats());
   },
   'AMAZON.HelpIntent': function() {
-    this.handler.state = GAME_STATES.HELP;
-    this.emitWithState('helpTheUser');
+    this.emit(':ask', res.tryANumber());
   },
   'AMAZON.StopIntent': function() {
-    this.handler.state = GAME_STATES.HELP;
     this.emit(':ask', 'Would you like to keep playing?');
   },
   'AMAZON.CancelIntent': function() {
     this.emit(':tell', 'Ok, let\'s play again soon.');
   },
   Unhandled() {
-    const speechOutput = 'Try saying a number between 1 and infinity';
-    this.emit(':ask', speechOutput, speechOutput);
+    this.emit(':ask', res.tryANumber());
   },
   SessionEndedRequest() {
     console.log(`Session ended in ${GAME_STATES.PLAYING} state: ${this.event.request.reason}`);

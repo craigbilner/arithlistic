@@ -6,6 +6,12 @@ module.exports.welcome = () =>
   `Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer within one 
 minute, would you like to play?`;
 
+module.exports.welcomePrompt = () =>
+  'Your only options are yes or no, there\'s no red or blue pill';
+
+module.exports.welcomeFail = () =>
+  'That\'s unfortunate, you\'re missing out....';
+
 module.exports.howManyPlayers = () =>
   `How many players will there be?`;
 
@@ -20,6 +26,12 @@ module.exports.namePrompt = () =>
 
 module.exports.askQuestion = (question, player) =>
   `${player.name}, what is ${question}?`;
+
+module.exports.noRepeats = () =>
+  'There are no repeats, this is a proper game, play on.';
+
+module.exports.tryANumber = () =>
+  'Try saying a number between 1 and infinity';
 
 module.exports.scoreAndAskQuestion = (question, result) => {
   const correctResponse = `Correct for ${result.points} points`;

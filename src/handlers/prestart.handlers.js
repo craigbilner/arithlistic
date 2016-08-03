@@ -12,7 +12,13 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
     this.handler.state = GAME_STATES.PLAYER_NUMBER;
     this.emit(':ask', res.howManyPlayers());
   },
+  'AMAZON.NoIntent': function() {
+    this.emit(':tell', res.welcomeFail());
+  },
   Unhandled() {
-    console.log('unhandled', GAME_STATES.PRESTART);
+    this.emit(':ask', res.welcomePrompt(), res.welcomePrompt());
+  },
+  SessionEndedRequest() {
+    console.log(`Session ended in ${GAME_STATES.PRESTART} state: ${this.event.request.reason}`);
   },
 });

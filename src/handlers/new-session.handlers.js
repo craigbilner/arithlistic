@@ -14,4 +14,7 @@ module.exports = {
   Unhandled() {
     console.log('unhandled');
   },
+  SessionEndedRequest() {
+    console.log(`Session ended in the beginning state: ${this.event.request.reason}`);
+  },
 };
