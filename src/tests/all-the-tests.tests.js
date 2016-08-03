@@ -67,7 +67,7 @@ describe('Alexa, start game', () => {
       runIntent(prestartYesIntent)
         .then(({ outputSpeech, gameState }) => {
           assert.deepEqual(outputSpeech, sanitise(howManyPlayers()));
-          assert.deepEqual(gameState, GAME_STATES.PRESTART);
+          assert.deepEqual(gameState, GAME_STATES.PLAYER_NUMBER);
         }));
 
     describe('One player', () => {
@@ -75,7 +75,7 @@ describe('Alexa, start game', () => {
         runIntent(onePlayerIntent)
           .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
-            assert.deepEqual(gameState, GAME_STATES.PRESTART);
+            assert.deepEqual(gameState, GAME_STATES.PLAYER_NUMBER);
             assert.deepEqual(playerCount, 1);
           }));
 
@@ -133,7 +133,7 @@ describe('Alexa, start game', () => {
         runIntent(threePlayerIntent)
           .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
-            assert.deepEqual(gameState, GAME_STATES.PRESTART);
+            assert.deepEqual(gameState, GAME_STATES.PLAYER_NAME);
             assert.deepEqual(playerCount, 3);
           }));
 
@@ -142,7 +142,7 @@ describe('Alexa, start game', () => {
           runIntent(name1Intent)
             .then(({ outputSpeech, gameState, players }) => {
               assert.deepEqual(outputSpeech, sanitise(whatIsYourName('two')));
-              assert.deepEqual(gameState, GAME_STATES.PRESTART);
+              assert.deepEqual(gameState, GAME_STATES.PLAYER_NAME);
               assert.deepEqual(players, [{ name: 'Inigo Montoya', score: 0 }]);
             }));
 
@@ -151,7 +151,7 @@ describe('Alexa, start game', () => {
             runIntent(name2Intent)
               .then(({ outputSpeech, gameState, players }) => {
                 assert.deepEqual(outputSpeech, sanitise(whatIsYourName('three')));
-                assert.deepEqual(gameState, GAME_STATES.PRESTART);
+                assert.deepEqual(gameState, GAME_STATES.PLAYER_NAME);
 
                 const expectedPlayers = [
                   {

@@ -5,7 +5,7 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "STATE": "PRESTART",
+      "STATE": "PLAYER_NAME",
       "playerCount": 3
     },
     "user": {

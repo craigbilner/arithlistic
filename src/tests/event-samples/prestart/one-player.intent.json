@@ -5,7 +5,7 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "STATE": "PRESTART"
+      "STATE": "PLAYER_NUMBER"
     },
     "user": {
       "userId": "userId"

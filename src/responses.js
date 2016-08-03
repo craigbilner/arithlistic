@@ -9,8 +9,14 @@ minute, would you like to play?`;
 module.exports.howManyPlayers = () =>
   `How many players will there be?`;
 
+module.exports.numberPrompt = () =>
+  'Try saying, one player, just me or, two players, three players etc.';
+
 module.exports.whatIsYourName = number =>
   `Player ${number}, what is your name?`;
+
+module.exports.namePrompt = () =>
+  'Try saying, my name is, then your name';
 
 module.exports.askQuestion = (question, player) =>
   `${player.name}, what is ${question}?`;
