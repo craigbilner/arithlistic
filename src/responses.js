@@ -15,7 +15,7 @@ module.exports.howManyPlayers = () =>
   `How many players will there be?`;
 
 module.exports.numberPrompt = () =>
-  'Try saying, one player, just me or, two players, three players etc.';
+  'Try saying, one player, just me, or, two players, three players etc.';
 
 module.exports.whatIsYourName = number =>
   `Player ${number}, what is your name?`;
