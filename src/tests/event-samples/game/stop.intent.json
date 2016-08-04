@@ -1,0 +1,41 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "playerCount": 2,
+      "players": [
+        {
+          "name": "tom",
+          "score": 0
+        },
+        {
+          "name": "dick",
+          "score": 0
+        }
+      ],
+      "STATE": "PLAYING",
+      "activePlayer": 0,
+      "startTime": "2016-08-04T00:01:52Z",
+      "timeOfLastQuestion": "2016-08-04T00:01:52Z",
+      "currentAnswer": -1
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-08-04T00:04:15Z",
+    "intent": {
+      "name": "AMAZON.StopIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

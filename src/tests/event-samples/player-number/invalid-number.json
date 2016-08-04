@@ -1,0 +1,26 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "STATE": "PLAYER_NUMBER"
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-08-03T23:53:19Z",
+    "intent": {
+      "name": "PassIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

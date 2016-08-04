@@ -14,6 +14,7 @@ const numberToWord = {
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, {
   PlayerNumberSoloIntent() {
     this.attributes.playerCount = 1;
+    this.handler.state = GAME_STATES.PLAYER_NAME;
     this.emit(':ask', res.whatIsYourName(numberToWord[1]));
   },
   PlayerNumberIntent() {

@@ -1,24 +1,37 @@
 {
   "session": {
-    "sessionId": "session-id",
+    "sessionId": "sessionId",
     "application": {
-      "applicationId": "app-id"
+      "applicationId": "appId"
     },
     "attributes": {
-      "speechOutput": "",
-      "repromptText": "",
-      "STATE": "PLAYING"
+      "playerCount": 2,
+      "players": [
+        {
+          "name": "tom",
+          "score": 0
+        },
+        {
+          "name": "dick",
+          "score": 0
+        }
+      ],
+      "STATE": "PLAYING",
+      "activePlayer": 0,
+      "startTime": "2016-08-04T00:01:52Z",
+      "timeOfLastQuestion": "2016-08-04T00:01:52Z",
+      "currentAnswer": -1
     },
     "user": {
-      "userId": "user-id"
+      "userId": "userId"
     },
     "new": false
   },
   "request": {
     "type": "IntentRequest",
-    "requestId": "request-id",
+    "requestId": "reqId",
     "locale": "en-US",
-    "timestamp": "2016-07-28T00:43:35Z",
+    "timestamp": "2016-08-04T00:03:45Z",
     "intent": {
       "name": "AMAZON.HelpIntent",
       "slots": {}

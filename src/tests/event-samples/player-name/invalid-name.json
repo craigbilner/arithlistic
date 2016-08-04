@@ -1,0 +1,27 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "playerCount": 1,
+      "STATE": "PLAYER_NUMBER"
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-08-03T23:54:42Z",
+    "intent": {
+      "name": "PlayerNumberSoloIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

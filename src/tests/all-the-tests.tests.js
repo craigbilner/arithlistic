@@ -76,7 +76,7 @@ describe('Alexa, start game', () => {
         runIntent(onePlayerIntent)
           .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
-            assert.deepEqual(gameState, GAME_STATES.PLAYER_NUMBER);
+            assert.deepEqual(gameState, GAME_STATES.PLAYER_NAME);
             assert.deepEqual(playerCount, 1);
           }));
 
