@@ -41,11 +41,11 @@ module.exports.keepPlaying = () =>
 module.exports.goodbye = () =>
   'Ok, let\'s play again soon.';
 
-module.exports.scoreAndAskQuestion = (question, result) => {
+module.exports.scoreAndAskQuestion = (question, player, result) => {
   const correctResponse = `Correct for ${result.points} points`;
   const incorrectResponse = `Incorrect, the answer was ${result.answer}, you score, ${result.points} points`;
   const response = result.isCorrect ? correctResponse : incorrectResponse;
-  const questionPrefix = result.playerCount > 1 ? `${result.nextPlayer.name}, what is` : 'What is';
+  const questionPrefix = result.playerCount > 1 ? `${player.name}, what is` : 'What is';
 
   return `${response}. ${questionPrefix} ${question}?`;
 };

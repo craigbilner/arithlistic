@@ -9,12 +9,14 @@ const handleUsersAnswer = require('../modules/handle-answer');
 const getNextPlayer = (currentPlayer, totalPlayers) =>
   currentPlayer >= (totalPlayers - 1) ? 0 : (currentPlayer + 1);
 
-function getAndEmitQuestion(response, opts) {
-  const quizItem = getQuestion((new Date(this.event.request.timestamp)).getTime());
+const getDifficulty = player => Math.min(Math.floor((player.correctAnswers || 0) / 2), 3);
+
+function getAndEmitQuestion(response, player, opts) {
+  const quizItem = getQuestion((new Date(this.event.request.timestamp)).getTime(), getDifficulty(player));
   this.attributes.currentAnswer = quizItem.answer;
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
-  this.emit(':ask', response(quizItem.question, opts));
+  this.emit(':ask', response(quizItem.question, player, opts));
 }
 
 const isGameOver = (start, end) => (new Date(end)) - (new Date(start)) > 60000;
@@ -43,10 +45,9 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     } else {
       const nextPlayer = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
       this.attributes.activePlayer = nextPlayer;
-      result.nextPlayer = this.attributes.players[nextPlayer];
       result.playerCount = this.attributes.playerCount;
 
-      getAndEmitQuestion.call(this, res.scoreAndAskQuestion, result);
+      getAndEmitQuestion.call(this, res.scoreAndAskQuestion, this.attributes.players[nextPlayer], result);
     }
   },
   PassIntent() {
