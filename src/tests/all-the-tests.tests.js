@@ -119,6 +119,7 @@ describe('Alexa, start game', () => {
                   'George Washington\'s presidency?');
                 assert.deepEqual(gameState, GAME_STATES.PLAYING);
                 assert.deepEqual(players[0].score, 46);
+                assert.deepEqual(players[0].correctAnswers, 0);
                 assert.deepEqual(activePlayer, 0);
               }));
 
@@ -130,6 +131,7 @@ describe('Alexa, start game', () => {
                     'atomic number of, hydrogen, plus, George Washington\'s presidency?');
                   assert.deepEqual(gameState, GAME_STATES.PLAYING);
                   assert.deepEqual(players[0].score, 332);
+                  assert.deepEqual(players[0].correctAnswers, 1);
                   assert.deepEqual(activePlayer, 0);
                 }));
 
@@ -308,6 +310,7 @@ describe('Alexa, start game', () => {
                       'George Washington\'s presidency?');
                     assert.deepEqual(gameState, GAME_STATES.PLAYING);
                     assert.deepEqual(players[0].score, 46);
+                    assert.deepEqual(players[0].correctAnswers, 0);
                     assert.deepEqual(activePlayer, 1);
                   }));
 
@@ -319,11 +322,12 @@ describe('Alexa, start game', () => {
                         'the atomic number of, hydrogen, plus, George Washington\'s presidency?');
                       assert.deepEqual(gameState, GAME_STATES.PLAYING);
                       assert.deepEqual(players[1].score, 286);
+                      assert.deepEqual(players[1].correctAnswers, 1);
                       assert.deepEqual(activePlayer, 2);
                     }));
 
                 describe('The answer is eight', () => {
-                  it('Score game, say answer is correct and ask the next question', () =>
+                  it('Score game, say answer is incorrect and ask the next question', () =>
                     runIntent(multiThirdAnswerIntent)
                       .then(({ outputSpeech, gameState, players, activePlayer }) => {
                         assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
@@ -331,6 +335,7 @@ describe('Alexa, start game', () => {
                           'George Washington\'s presidency?');
                         assert.deepEqual(gameState, GAME_STATES.PLAYING);
                         assert.deepEqual(players[2].score, 46);
+                        assert.deepEqual(players[2].correctAnswers, 0);
                         assert.deepEqual(activePlayer, 0);
                       }));
 
@@ -343,6 +348,7 @@ describe('Alexa, start game', () => {
                             'anniversary, minus, the atomic number of, lithium?');
                           assert.deepEqual(gameState, GAME_STATES.PLAYING);
                           assert.deepEqual(players[0].score, 345);
+                          assert.deepEqual(players[0].correctAnswers, 1);
                         }));
 
                     describe('The answer is seven', () => {
