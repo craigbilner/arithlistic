@@ -29,6 +29,9 @@ module.exports.askQuestion = (question, player) =>
 module.exports.noRepeats = () =>
   'There are no repeats, this is a proper game, play on.';
 
+module.exports.noHelp = () =>
+  'Help is for the weak, you shall have none!';
+
 module.exports.tryANumber = () =>
   'Try saying a number between 1 and infinity';
 

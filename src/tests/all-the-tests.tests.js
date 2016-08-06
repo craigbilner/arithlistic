@@ -23,6 +23,8 @@ const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.inte
 const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent');
 const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent');
 const invalidAnswer = require('./event-samples/game/blablabla.intent');
+const cancel = require('./event-samples/game/cancel.intent');
+const help = require('./event-samples/game/help.intent');
 const {
   welcome,
   howManyPlayers,
@@ -31,6 +33,8 @@ const {
   namePrompt,
   welcomeFail,
   welcomePrompt,
+  goodbye,
+  noHelp,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -132,6 +136,22 @@ describe('Alexa, start game', () => {
                   }));
             });
           });
+        });
+
+        describe('Cancel', () => {
+          it('Cancels the game', () =>
+            runIntent(cancel)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, goodbye());
+              }));
+        });
+
+        describe('Help me', () => {
+          it('Informs the player there is no help', () =>
+            runIntent(help)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, noHelp());
+              }));
         });
 
         describe('Bla bla bla', () => {

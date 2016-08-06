@@ -60,7 +60,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     this.emit(':ask', res.noRepeats());
   },
   'AMAZON.HelpIntent': function() {
-    this.emit(':ask', res.tryANumber());
+    this.emit(':ask', res.noHelp());
   },
   'AMAZON.StopIntent': function() {
     this.emit(':ask', res.keepPlaying());
