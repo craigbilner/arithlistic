@@ -5,6 +5,7 @@ const skill = require('../index');
 const context = require('aws-lambda-mock-context');
 const sessionStartIntent = require('./event-samples/new-session/session-start.intent');
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
+const prestartNoIntent = require('./event-samples/prestart/no.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const threePlayerIntent = require('./event-samples/prestart/three-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
@@ -27,6 +28,7 @@ const {
   whatIsYourName,
   tryANumber,
   namePrompt,
+  welcomeFail,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -292,6 +294,10 @@ describe('Alexa, start game', () => {
   });
 
   describe('No', () => {
-
+    it('Give unfortunate speech', () =>
+      runIntent(prestartNoIntent)
+        .then(({ outputSpeech }) => {
+          assert.deepEqual(outputSpeech, welcomeFail());
+        }));
   });
 });
