@@ -19,7 +19,7 @@ function getAndEmitQuestion(response, player, opts) {
   this.emit(':ask', response(quizItem.question, player, opts));
 }
 
-const isGameOver = (start, end) => (new Date(end)) - (new Date(start)) > 60000;
+const isGameOver = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
