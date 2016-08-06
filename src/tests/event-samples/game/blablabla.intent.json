@@ -1,0 +1,37 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "playerCount": 1,
+      "players": [
+        {
+          "name": "john",
+          "score": 0
+        }
+      ],
+      "STATE": "PLAYING",
+      "activePlayer": 0,
+      "startTime": "2016-08-06T11:56:47Z",
+      "timeOfLastQuestion": "2016-08-06T11:56:47Z",
+      "currentAnswer": 1
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-08-06T11:56:52Z",
+    "intent": {
+      "name": "PlayerNumberSoloIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

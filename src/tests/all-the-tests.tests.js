@@ -15,15 +15,17 @@ const name3Intent = require('./event-samples/prestart/name3.intent');
 const firstAnswerIntent = require('./event-samples/game/answer.intent');
 const secondAnswerIntent = require('./event-samples/game/answer2.intent');
 const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
-const multiFirstAnswerIntent = require('./event-samples/game/multip-answer.intent.json');
-const multiSecondAnswerIntent = require('./event-samples/game/multip-answer2.intent.json');
-const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.intent.json');
-const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent.json');
-const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent.json');
+const multiFirstAnswerIntent = require('./event-samples/game/multip-answer.intent');
+const multiSecondAnswerIntent = require('./event-samples/game/multip-answer2.intent');
+const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.intent');
+const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent');
+const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent');
+const invalidAnswer = require('./event-samples/game/blablabla.intent');
 const {
   welcome,
   howManyPlayers,
   whatIsYourName,
+  tryANumber,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -127,8 +129,12 @@ describe('Alexa, start game', () => {
           });
         });
 
-        describe('Five', () => {
-
+        describe('Bla bla bla', () => {
+          it('Tell the player how to answer a question', () =>
+            runIntent(invalidAnswer)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, tryANumber());
+              }));
         });
       });
 
