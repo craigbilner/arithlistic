@@ -26,6 +26,7 @@ const invalidAnswer = require('./event-samples/game/blablabla.intent');
 const pass = require('./event-samples/game/pass.intent');
 const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
+const repeat = require('./event-samples/game/repeat.intent');
 const {
   welcome,
   howManyPlayers,
@@ -36,6 +37,7 @@ const {
   welcomePrompt,
   goodbye,
   noHelp,
+  noRepeats,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -163,6 +165,14 @@ describe('Alexa, start game', () => {
                   'leather wedding anniversary, plus, the number of the herculean labour where he' +
                   ', captures the ceryneian hind?');
                 assert.deepEqual(players[0].score, 0);
+              }));
+        });
+
+        describe('Can you repeat that', () => {
+          it('Inform the player there are no repeats', () =>
+            runIntent(repeat)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, noRepeats());
               }));
         });
 
