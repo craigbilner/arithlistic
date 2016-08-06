@@ -23,6 +23,8 @@ const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.inte
 const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent');
 const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent');
 const invalidAnswer = require('./event-samples/game/blablabla.intent');
+const fourthCorrectAnswerIntent = require('./event-samples/game/fourth-correct-answer.intent');
+const sixthCorrectAnswerIntent = require('./event-samples/game/sixth-correct-answer.intent');
 const pass = require('./event-samples/game/pass.intent');
 const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
@@ -134,6 +136,27 @@ describe('Alexa, start game', () => {
                   assert.deepEqual(players[0].correctAnswers, 1);
                   assert.deepEqual(activePlayer, 0);
                 }));
+
+            describe('The answer is nine', () => {
+              it('raises the question difficulty after four correct answers', () =>
+                runIntent(fourthCorrectAnswerIntent)
+                  .then(({ outputSpeech }) => {
+                    assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a light air ' +
+                      'on the beaufort scale, plus, the atomic number of, helium, plus, ' +
+                      'John Adams\'s presidency?');
+                  }));
+
+              describe('The answer is fifteen', () => {
+                it('raises the question difficulty after six correct answers', () =>
+                  runIntent(sixthCorrectAnswerIntent)
+                    .then(({ outputSpeech }) => {
+                      assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a moderate ' +
+                        'breeze on the beaufort scale, minus, a moderate breeze on the beaufort ' +
+                        'scale, minus, the atomic number of, nitrogen, plus, ' +
+                        'Andrew Jackson\'s presidency?');
+                    }));
+              });
+            });
 
             describe('The answer is seven', () => {
               it('End game after it has lasted more than a minute', () =>

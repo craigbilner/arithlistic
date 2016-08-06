@@ -1,0 +1,43 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "playerCount": 1,
+      "activePlayer": 0,
+      "players": [
+        {
+          "name": "craig",
+          "score": 600,
+          "correctAnswers": 3
+        }
+      ],
+      "STATE": "PLAYING",
+      "startTime": "2016-07-31T16:58:47Z",
+      "timeOfLastQuestion": "2016-07-31T16:58:47Z",
+      "currentAnswer": 9
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-31T16:59:00Z",
+    "intent": {
+      "name": "AnswerIntent",
+      "slots": {
+        "Answer": {
+          "name": "Answer",
+          "value": "9"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

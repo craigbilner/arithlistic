@@ -13,7 +13,8 @@ const difficultyCount = {
 const difficultyLimit = {
   0: 5,
   1: 10,
-  2: 20,
+  2: 15,
+  3: 20,
 };
 
 const questionPrefixes = {
@@ -125,7 +126,9 @@ const calculateQuestions = (operations, questions, compiledQuestion) => {
     _compiledQuestion.question = `${fstQ.question}, ${thisOperation.text}, ${sndQ.question}`;
     _compiledQuestion.answer = thisOperation.invoke(fstQ.answer, sndQ.answer);
   } else {
-
+    const nextQuestion = _questions.pop();
+    _compiledQuestion.question = `${_compiledQuestion.question}, ${thisOperation.text}, ${nextQuestion.question}`;
+    _compiledQuestion.answer = thisOperation.invoke(_compiledQuestion.answer, nextQuestion.answer);
   }
 
   return calculateQuestions(_operations, _questions, _compiledQuestion);
