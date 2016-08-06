@@ -28,6 +28,7 @@ const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
 const repeat = require('./event-samples/game/repeat.intent');
 const startOver = require('./event-samples/game/start-over.intent');
+const stop = require('./event-samples/game/stop.intent');
 const {
   welcome,
   howManyPlayers,
@@ -39,6 +40,7 @@ const {
   goodbye,
   noHelp,
   noRepeats,
+  keepPlaying,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -182,6 +184,14 @@ describe('Alexa, start game', () => {
             runIntent(startOver)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, welcome());
+              }));
+        });
+
+        describe('Stop it!', () => {
+          it('Ask if the player would like to keep playing', () =>
+            runIntent(stop)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, keepPlaying());
               }));
         });
 
