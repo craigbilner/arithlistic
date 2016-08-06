@@ -17,8 +17,14 @@ const difficultyLimit = {
   3: 20,
 };
 
+const beaufortScalePlurals = {
+  calm: true,
+  'light air': true,
+};
+
+
 const questionPrefixes = {
-  'beaufort scale': questionPart => questionPart === 'calm' ? '' : 'a ',
+  'beaufort scale': questionPart => beaufortScalePlurals[questionPart] ? '' : 'a ',
   'mohs scale': () => '',
   'herculean labour': () => 'the number of the herculean labour where he, ',
   'morse code': () => '',
@@ -78,12 +84,12 @@ const minus = {
 };
 
 const multiply = {
-  text: 'multiply',
+  text: 'multiplied by',
   invoke: (a, b) => a * b,
 };
 
 const divide = {
-  text: 'divide',
+  text: 'divided by',
   invoke: (a, b) => a / b,
 };
 
@@ -103,7 +109,7 @@ const generateOperations = (seed, difficulty) => {
   const operations = [add, minus];
 
   if (difficulty > 1) {
-    operations.concat(multiply, divide);
+    operations.push(multiply, divide);
   }
 
   return pickOperations(seed, operations, operationCount);

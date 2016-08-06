@@ -141,8 +141,8 @@ describe('Alexa, start game', () => {
               it('raises the question difficulty after four correct answers', () =>
                 runIntent(fourthCorrectAnswerIntent)
                   .then(({ outputSpeech }) => {
-                    assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a light air ' +
-                      'on the beaufort scale, plus, the atomic number of, helium, plus, ' +
+                    assert.deepEqual(outputSpeech, 'Correct for 286 points. What is light air ' +
+                      'on the beaufort scale, minus, the atomic number of, helium, minus, ' +
                       'John Adams\'s presidency?');
                   }));
 
@@ -150,10 +150,10 @@ describe('Alexa, start game', () => {
                 it('raises the question difficulty after six correct answers', () =>
                   runIntent(sixthCorrectAnswerIntent)
                     .then(({ outputSpeech }) => {
-                      assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a moderate ' +
-                        'breeze on the beaufort scale, minus, a moderate breeze on the beaufort ' +
-                        'scale, minus, the atomic number of, nitrogen, plus, ' +
-                        'Andrew Jackson\'s presidency?');
+                      assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a ' +
+                        'moderate breeze on the beaufort scale, divided by, a moderate breeze ' +
+                        'on the beaufort scale, divided by, the atomic number of, nitrogen, ' +
+                        'minus, Andrew Jackson\'s presidency?');
                     }));
               });
             });
