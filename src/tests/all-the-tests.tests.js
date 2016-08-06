@@ -6,6 +6,7 @@ const context = require('aws-lambda-mock-context');
 const sessionStartIntent = require('./event-samples/new-session/session-start.intent');
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const prestartNoIntent = require('./event-samples/prestart/no.intent');
+const invalidYesNoIntent = require('./event-samples/prestart/invalid-yesno.intent');
 const onePlayerIntent = require('./event-samples/prestart/one-player.intent');
 const threePlayerIntent = require('./event-samples/prestart/three-player.intent');
 const nameIntent = require('./event-samples/prestart/name.intent');
@@ -29,6 +30,7 @@ const {
   tryANumber,
   namePrompt,
   welcomeFail,
+  welcomePrompt,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -151,7 +153,11 @@ describe('Alexa, start game', () => {
       });
 
       describe('Bla bla bla', function() {
-
+        it('Does something', () =>
+          runIntent(invalidNameIntent)
+            .then(({ outputSpeech }) => {
+              assert.deepEqual(outputSpeech, namePrompt());
+            }));
       });
     });
 
@@ -287,10 +293,6 @@ describe('Alexa, start game', () => {
         });
       });
     });
-
-    describe('Bla bla bla', () => {
-
-    });
   });
 
   describe('No', () => {
@@ -298,6 +300,14 @@ describe('Alexa, start game', () => {
       runIntent(prestartNoIntent)
         .then(({ outputSpeech }) => {
           assert.deepEqual(outputSpeech, welcomeFail());
+        }));
+  });
+
+  describe('Pass', () => {
+    it('Suggests saying yes or no', () =>
+      runIntent(invalidYesNoIntent)
+        .then(({ outputSpeech }) => {
+          assert.deepEqual(outputSpeech, welcomePrompt());
         }));
   });
 });
