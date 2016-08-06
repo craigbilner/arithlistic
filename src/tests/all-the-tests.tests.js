@@ -23,6 +23,7 @@ const multiThirdAnswerIntent = require('./event-samples/game/multip-answer3.inte
 const multiFourthAnswerIntent = require('./event-samples/game/multip-answer4.intent');
 const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.intent');
 const invalidAnswer = require('./event-samples/game/blablabla.intent');
+const pass = require('./event-samples/game/pass.intent');
 const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
 const {
@@ -151,6 +152,17 @@ describe('Alexa, start game', () => {
             runIntent(help)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, noHelp());
+              }));
+        });
+
+        describe('Pass', () => {
+          it('Asks the next question without a score', () =>
+            runIntent(pass)
+              .then(({ outputSpeech, players }) => {
+                assert.deepEqual(outputSpeech, 'dick, what is the number of years, for a ' +
+                  'leather wedding anniversary, plus, the number of the herculean labour where he' +
+                  ', captures the ceryneian hind?');
+                assert.deepEqual(players[0].score, 0);
               }));
         });
 

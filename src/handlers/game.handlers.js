@@ -50,7 +50,11 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     }
   },
   PassIntent() {
-    // move to next question here
+    const activePlayerIndx = this.attributes.activePlayer;
+    const nextPlayer = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
+    this.attributes.activePlayer = nextPlayer;
+
+    getAndEmitQuestion.call(this, res.askQuestion, this.attributes.players[nextPlayer]);
   },
   'AMAZON.StartOverIntent': function() {
     this.handler.state = GAME_STATES.PRESTART;
