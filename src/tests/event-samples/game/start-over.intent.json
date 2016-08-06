@@ -8,10 +8,12 @@
       "playerCount": 2,
       "players": [
         {
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         },
         {
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         }
       ],
       "STATE": "PLAYING",

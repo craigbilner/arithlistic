@@ -9,7 +9,8 @@
       "players": [
         {
           "name": "john",
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         }
       ],
       "STATE": "PLAYING",

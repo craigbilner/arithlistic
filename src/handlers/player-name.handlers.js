@@ -24,6 +24,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, {
     const player = {
       name,
       score: 0,
+      correctAnswers: 0,
     };
 
     this.attributes.players = this.attributes.players.concat(player);

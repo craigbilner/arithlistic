@@ -39,6 +39,10 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     this.attributes.players[activePlayerIndx].score =
       this.attributes.players[activePlayerIndx].score + result.points;
 
+    if (result.isCorrect) {
+      this.attributes.players[activePlayerIndx].correctAnswers += 1;
+    }
+
     if (isGameOver(this.attributes.startTime, this.event.request.timestamp)) {
       this.handler.state = GAME_STATES.GAME_OVER;
       this.emit(':tell', res.gameOver(this.attributes.players));

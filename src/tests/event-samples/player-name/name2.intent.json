@@ -10,7 +10,8 @@
       "players": [
         {
           "name": "Inigo Montoya",
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         }
       ]
     },

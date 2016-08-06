@@ -237,7 +237,11 @@ describe('Alexa, start game', () => {
             .then(({ outputSpeech, gameState, players }) => {
               assert.deepEqual(outputSpeech, sanitise(whatIsYourName('two')));
               assert.deepEqual(gameState, GAME_STATES.PLAYER_NAME);
-              assert.deepEqual(players, [{ name: 'Inigo Montoya', score: 0 }]);
+              assert.deepEqual(players, [{
+                name: 'Inigo Montoya',
+                score: 0,
+                correctAnswers: 0,
+              }]);
             }));
 
         describe('My name is Prince Humperdinck', () => {
@@ -251,10 +255,12 @@ describe('Alexa, start game', () => {
                   {
                     name: 'Inigo Montoya',
                     score: 0,
+                    correctAnswers: 0,
                   },
                   {
                     name: 'Prince Humperdinck',
                     score: 0,
+                    correctAnswers: 0,
                   },
                 ];
 
@@ -275,14 +281,17 @@ describe('Alexa, start game', () => {
                     {
                       name: 'Inigo Montoya',
                       score: 0,
+                      correctAnswers: 0,
                     },
                     {
                       name: 'Prince Humperdinck',
                       score: 0,
+                      correctAnswers: 0,
                     },
                     {
                       name: 'Fezzik',
                       score: 0,
+                      correctAnswers: 0,
                     },
                   ];
 

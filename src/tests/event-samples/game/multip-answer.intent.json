@@ -11,15 +11,18 @@
       "players": [
         {
           "name": "Inigo Montoya",
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         },
         {
           "name": "Prince Humperdinck",
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         },
         {
           "name": "Fezzik",
-          "score": 0
+          "score": 0,
+          "correctAnswers": 0
         }
       ],
       "startTime": "2016-07-31T16:58:47Z",
