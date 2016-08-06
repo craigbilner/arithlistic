@@ -27,6 +27,7 @@ const pass = require('./event-samples/game/pass.intent');
 const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
 const repeat = require('./event-samples/game/repeat.intent');
+const startOver = require('./event-samples/game/start-over.intent');
 const {
   welcome,
   howManyPlayers,
@@ -173,6 +174,14 @@ describe('Alexa, start game', () => {
             runIntent(repeat)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, noRepeats());
+              }));
+        });
+
+        describe('Just start again', () => {
+          it('Go back to the game intro', () =>
+            runIntent(startOver)
+              .then(({ outputSpeech }) => {
+                assert.deepEqual(outputSpeech, welcome());
               }));
         });
 
