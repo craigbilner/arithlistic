@@ -11,18 +11,22 @@ const numberToWord = {
   4: 'four',
 };
 
+const nameIsValid = name => !!name;
+
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, {
   PlayerNameIntent() {
+    const name = this.event.request.intent.slots.Name.value;
+
+    if (!nameIsValid(name)) {
+      return this.emitWithState('Unhandled');
+    }
+
     const player = {
-      name: this.event.request.intent.slots.Name.value,
+      name,
       score: 0,
     };
 
-    if (!this.attributes.players) {
-      this.attributes.players = [player];
-    } else {
-      this.attributes.players = this.attributes.players.concat(player);
-    }
+    this.attributes.players = this.attributes.players.concat(player);
 
     if (this.attributes.players.length === this.attributes.playerCount) {
       this.attributes.activePlayer = 0;

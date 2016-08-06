@@ -6,6 +6,7 @@
     },
     "attributes": {
       "playerCount": 2,
+      "players": [],
       "STATE": "PLAYER_NAME"
     },
     "user": {

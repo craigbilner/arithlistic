@@ -26,6 +26,7 @@ const {
   howManyPlayers,
   whatIsYourName,
   tryANumber,
+  namePrompt,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -141,8 +142,9 @@ describe('Alexa, start game', () => {
       describe('Inigo Montoya is my name', () => {
         it('Ask for the same players name again', () =>
           runIntent(invalidNameIntent)
-            .then(({ outputSpeech, gameState, players, activePlayer }) => {
-              console.log(outputSpeech, gameState, players, activePlayer);
+            .then(({ outputSpeech, players }) => {
+              assert.deepEqual(outputSpeech, namePrompt());
+              assert.deepEqual(players, []);
             }));
       });
 

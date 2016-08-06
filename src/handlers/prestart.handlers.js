@@ -10,6 +10,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   },
   'AMAZON.YesIntent': function() {
     this.handler.state = GAME_STATES.PLAYER_NUMBER;
+    this.attributes.players = [];
     this.emit(':ask', res.howManyPlayers());
   },
   'AMAZON.NoIntent': function() {
