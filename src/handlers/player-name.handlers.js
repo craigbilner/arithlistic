@@ -16,31 +16,41 @@ const nameIsValid = name => !!name;
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, {
   PlayerNameIntent() {
     const name = this.event.request.intent.slots.Name.value;
+    const hasValidName = nameIsValid(name);
+    let lastPlayerName;
 
-    if (!nameIsValid(name)) {
-      return this.emitWithState('Unhandled');
+    // updates
+    if (hasValidName) {
+      const player = {
+        name,
+        score: 0,
+        correctAnswers: 0,
+      };
+
+      this.attributes.players = this.attributes.players.concat(player);
+      lastPlayerName = this.attributes.players.length === this.attributes.playerCount;
+
+      if (lastPlayerName) {
+        this.attributes.activePlayer = 0;
+        this.handler.state = GAME_STATES.PLAYING;
+      }
     }
 
-    const player = {
-      name,
-      score: 0,
-      correctAnswers: 0,
-    };
-
-    this.attributes.players = this.attributes.players.concat(player);
-
-    if (this.attributes.players.length === this.attributes.playerCount) {
-      this.attributes.activePlayer = 0;
-      this.handler.state = GAME_STATES.PLAYING;
-      this.emitWithState('AskQuestion');
+    // response
+    if (hasValidName) {
+      if (lastPlayerName) {
+        this.emitWithState('AskQuestion');
+      } else {
+        this.emit(':ask', res.whatIsYourName(numberToWord[this.attributes.players.length + 1]));
+      }
     } else {
-      this.emit(':ask', res.whatIsYourName(numberToWord[this.attributes.players.length + 1]));
+      this.emitWithState('Unhandled');
     }
   },
   Unhandled() {
     this.emit(':ask', res.namePrompt(), res.namePrompt());
   },
   SessionEndedRequest() {
-    console.log(`Session ended in ${GAME_STATES.PLAYER_NAME} state: ${this.event.request.reason}`);
+    console.log(`${GAME_STATES.PLAYER_NAME} ended: ${this.event.request.reason}`);
   },
 });

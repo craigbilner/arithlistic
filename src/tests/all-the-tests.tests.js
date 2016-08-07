@@ -240,12 +240,10 @@ describe('Alexa, start game', () => {
             }));
       });
 
-      describe('Bla bla bla', function() {
+      describe('Bla bla bla', () => {
         it('Does something', () =>
           runIntent(invalidNameIntent)
-            .then(({ outputSpeech }) => {
-              assert.deepEqual(outputSpeech, namePrompt());
-            }));
+            .then(({ outputSpeech }) => assert.deepEqual(outputSpeech, namePrompt())));
       });
     });
 

@@ -115,29 +115,29 @@ const generateOperations = (seed, difficulty) => {
   return pickOperations(seed, operations, operationCount);
 };
 
-const calculateQuestions = (operations, questions, compiledQuestion) => {
+const calculateQuestions = (operations, questions, question) => {
   if (operations.length === 0) {
-    return compiledQuestion;
+    return question;
   }
 
   const _operations = operations.slice(0);
   const thisOperation = _operations.pop();
   const _questions = questions.slice(0);
-  const _compiledQuestion = compiledQuestion || {};
+  const _question = question || {};
 
-  if (!_compiledQuestion.question) {
+  if (!_question.question) {
     const fstQ = _questions.pop();
     const sndQ = _questions.pop();
 
-    _compiledQuestion.question = `${fstQ.question}, ${thisOperation.text}, ${sndQ.question}`;
-    _compiledQuestion.answer = thisOperation.invoke(fstQ.answer, sndQ.answer);
+    _question.question = `${fstQ.question}, ${thisOperation.text}, ${sndQ.question}`;
+    _question.answer = thisOperation.invoke(fstQ.answer, sndQ.answer);
   } else {
     const nextQuestion = _questions.pop();
-    _compiledQuestion.question = `${_compiledQuestion.question}, ${thisOperation.text}, ${nextQuestion.question}`;
-    _compiledQuestion.answer = thisOperation.invoke(_compiledQuestion.answer, nextQuestion.answer);
+    _question.question = `${_question.question}, ${thisOperation.text}, ${nextQuestion.question}`;
+    _question.answer = thisOperation.invoke(_question.answer, nextQuestion.answer);
   }
 
-  return calculateQuestions(_operations, _questions, _compiledQuestion);
+  return calculateQuestions(_operations, _questions, _question);
 };
 
 module.exports = (seed, difficulty) => {

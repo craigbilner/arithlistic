@@ -12,18 +12,25 @@ const getNextPlayer = (currentPlayer, totalPlayers) =>
 const getDifficulty = player => Math.min(Math.floor((player.correctAnswers || 0) / 2), 3);
 
 function getAndEmitQuestion(response, player, opts) {
-  const quizItem = getQuestion((new Date(this.event.request.timestamp)).getTime(), getDifficulty(player));
+  const currentTime = (new Date(this.event.request.timestamp)).getTime();
+  const quizItem = getQuestion(currentTime, getDifficulty(player));
+
+  // updates
   this.attributes.currentAnswer = quizItem.answer;
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
+  // response
   this.emit(':ask', response(quizItem.question, player, opts));
 }
 
-const isGameOver = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
+const gameHasFinished = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   AskQuestion() {
+    // updates
     this.attributes.startTime = this.event.request.timestamp;
+
+    // response
     getAndEmitQuestion.call(this, res.askQuestion, this.attributes.players[0]);
   },
   AnswerIntent() {
@@ -34,8 +41,10 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       timeOfAnswer: this.event.request.timestamp,
       hasPassed: false,
     });
-
     const activePlayerIndx = this.attributes.activePlayer;
+    const isGameOver = gameHasFinished(this.attributes.startTime, this.event.request.timestamp);
+
+    // updates
     this.attributes.players[activePlayerIndx].score =
       this.attributes.players[activePlayerIndx].score + result.points;
 
@@ -43,15 +52,20 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       this.attributes.players[activePlayerIndx].correctAnswers += 1;
     }
 
-    if (isGameOver(this.attributes.startTime, this.event.request.timestamp)) {
+    let nextPlayerIndx;
+    if (isGameOver) {
       this.handler.state = GAME_STATES.GAME_OVER;
-      this.emit(':tell', res.gameOver(this.attributes.players));
     } else {
-      const nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
-      const player = this.attributes.players[nextPlayerIndx];
-
+      nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
       this.attributes.activePlayer = nextPlayerIndx;
       result.playerCount = this.attributes.playerCount;
+    }
+
+    // response
+    if (isGameOver) {
+      this.emit(':tell', res.gameOver(this.attributes.players));
+    } else {
+      const player = this.attributes.players[nextPlayerIndx];
 
       getAndEmitQuestion.call(this, res.scoreAndAskQuestion, player, result);
     }
@@ -64,12 +78,18 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       answer: this.attributes.currentAnswer,
     };
 
+    // updates
     this.attributes.activePlayer = nextPlayerIndx;
 
+
+    // response
     getAndEmitQuestion.call(this, res.passAndAskQuestion, player, opts);
   },
   'AMAZON.StartOverIntent': function() {
+    // updates
     this.handler.state = GAME_STATES.PRESTART;
+
+    // response
     this.emitWithState('GameIntro');
   },
   'AMAZON.RepeatIntent': function() {
@@ -88,6 +108,6 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     this.emit(':ask', res.tryANumber());
   },
   SessionEndedRequest() {
-    console.log(`Session ended in ${GAME_STATES.PLAYING} state: ${this.event.request.reason}`);
+    console.log(`${GAME_STATES.PLAYING} ended: ${this.event.request.reason}`);
   },
 });

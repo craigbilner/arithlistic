@@ -9,8 +9,11 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
     this.emit(':ask', res.welcome());
   },
   'AMAZON.YesIntent': function() {
+    // updates
     this.handler.state = GAME_STATES.PLAYER_NUMBER;
     this.attributes.players = [];
+
+    // response
     this.emit(':ask', res.howManyPlayers());
   },
   'AMAZON.NoIntent': function() {
@@ -20,6 +23,6 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
     this.emit(':ask', res.welcomePrompt(), res.welcomePrompt());
   },
   SessionEndedRequest() {
-    console.log(`Session ended in ${GAME_STATES.PRESTART} state: ${this.event.request.reason}`);
+    console.log(`${GAME_STATES.PRESTART} ended: ${this.event.request.reason}`);
   },
 });

@@ -13,19 +13,25 @@ const numberToWord = {
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, {
   PlayerNumberSoloIntent() {
+    // updates
     this.attributes.playerCount = 1;
     this.handler.state = GAME_STATES.PLAYER_NAME;
+
+    // response
     this.emit(':ask', res.whatIsYourName(numberToWord[1]));
   },
   PlayerNumberIntent() {
+    // updates
     this.attributes.playerCount = parseInt(this.event.request.intent.slots.Players.value, 10);
     this.handler.state = GAME_STATES.PLAYER_NAME;
+
+    // response
     this.emit(':ask', res.whatIsYourName('one'));
   },
   Unhandled() {
     this.emit(':ask', res.numberPrompt(), res.numberPrompt());
   },
   SessionEndedRequest() {
-    console.log(`Session ended in ${GAME_STATES.PLAYER_NUMBER} state: ${this.event.request.reason}`);
+    console.log(`${GAME_STATES.PLAYER_NUMBER} ended: ${this.event.request.reason}`);
   },
 });
