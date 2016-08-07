@@ -47,19 +47,26 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       this.handler.state = GAME_STATES.GAME_OVER;
       this.emit(':tell', res.gameOver(this.attributes.players));
     } else {
-      const nextPlayer = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
-      this.attributes.activePlayer = nextPlayer;
+      const nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
+      const player = this.attributes.players[nextPlayerIndx];
+
+      this.attributes.activePlayer = nextPlayerIndx;
       result.playerCount = this.attributes.playerCount;
 
-      getAndEmitQuestion.call(this, res.scoreAndAskQuestion, this.attributes.players[nextPlayer], result);
+      getAndEmitQuestion.call(this, res.scoreAndAskQuestion, player, result);
     }
   },
   PassIntent() {
     const activePlayerIndx = this.attributes.activePlayer;
-    const nextPlayer = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
-    this.attributes.activePlayer = nextPlayer;
+    const nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
+    const player = this.attributes.players[nextPlayerIndx];
+    const opts = {
+      answer: this.attributes.currentAnswer,
+    };
 
-    getAndEmitQuestion.call(this, res.askQuestion, this.attributes.players[nextPlayer]);
+    this.attributes.activePlayer = nextPlayerIndx;
+
+    getAndEmitQuestion.call(this, res.passAndAskQuestion, player, opts);
   },
   'AMAZON.StartOverIntent': function() {
     this.handler.state = GAME_STATES.PRESTART;

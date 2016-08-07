@@ -189,9 +189,11 @@ describe('Alexa, start game', () => {
           it('Asks the next question without a score', () =>
             runIntent(pass)
               .then(({ outputSpeech, players }) => {
-                assert.deepEqual(outputSpeech, 'dick, what is the number of years, for a ' +
-                  'leather wedding anniversary, plus, the number of the herculean labour where he' +
-                  ', captures the ceryneian hind?');
+                assert.deepEqual(outputSpeech, 'I\'ll take that as a pass. The correct answer ' +
+                  'was -1. dick, what is the number of years, for a leather wedding anniversary,' +
+                  ' plus, the number of the herculean labour where he, ' +
+                  'captures the ceryneian hind?');
+
                 assert.deepEqual(players[0].score, 0);
               }));
         });
