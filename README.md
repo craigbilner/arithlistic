@@ -21,16 +21,16 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 
 ## Todo:
 
-* Add advanced difficulty bits
 * Get the thing published
 * Write tutorial
 * Join up the utterances a bit better as they're sort of in three places, possibly using [alexa-utterances](https://github.com/mreinstein/alexa-utterances)
 
-## Lessons learned so far...
+## Lessons learnt so far...
 
 * Alexa very rarely understands what I'm saying, two and four appear to be particularly tricky for her
 * Can't find any docs on `emitWithState` but what it actually means is, "call an internal intent"
 * Keep the handlers granular to make the failure intents much easier to capture and manage, and especially with more ambiguous intents such as "yes" and "no"
+* Be careful with one words intents; for example my "Pass" intent was getting triggered whether you say "pass", "bla" or "blub"
 
 ## Tips:
 
