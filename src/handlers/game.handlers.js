@@ -52,11 +52,10 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
       this.attributes.players[activePlayerIndx].correctAnswers += 1;
     }
 
-    let nextPlayerIndx;
     if (isGameOver) {
       this.handler.state = GAME_STATES.GAME_OVER;
     } else {
-      nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
+      const nextPlayerIndx = getNextPlayer(activePlayerIndx, this.attributes.playerCount);
       this.attributes.activePlayer = nextPlayerIndx;
       result.playerCount = this.attributes.playerCount;
     }
@@ -65,7 +64,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
     if (isGameOver) {
       this.emit(':tell', res.gameOver(this.attributes.players));
     } else {
-      const player = this.attributes.players[nextPlayerIndx];
+      const player = this.attributes.players[this.attributes.activePlayer];
 
       getAndEmitQuestion.call(this, res.scoreAndAskQuestion, player, result);
     }
