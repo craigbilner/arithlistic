@@ -5,9 +5,8 @@
       "applicationId": "appId"
     },
     "attributes": {
-      "playerCount": 1,
-      "players": [],
-      "STATE": "PLAYER_NUMBER"
+      "STATE": "PLAYER_NUMBER",
+      "players": []
     },
     "user": {
       "userId": "userId"
@@ -18,10 +17,15 @@
     "type": "IntentRequest",
     "requestId": "reqId",
     "locale": "en-US",
-    "timestamp": "2016-08-03T23:54:42Z",
+    "timestamp": "2016-08-02T20:45:18Z",
     "intent": {
-      "name": "PlayerNumberSoloIntent",
-      "slots": {}
+      "name": "PlayerNumberIntent",
+      "slots": {
+        "Players": {
+          "name": "Players",
+          "value": "10"
+        }
+      }
     }
   },
   "version": "1.0"

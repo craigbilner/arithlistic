@@ -21,12 +21,21 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, {
     this.emit(':ask', res.whatIsYourName(numberToWord[1]));
   },
   PlayerNumberIntent() {
+    const requestedNumber = parseInt(this.event.request.intent.slots.Players.value, 10);
+    const numberIsValid = requestedNumber >= 1 && requestedNumber <= 4;
+
     // updates
-    this.attributes.playerCount = parseInt(this.event.request.intent.slots.Players.value, 10);
-    this.handler.state = GAME_STATES.PLAYER_NAME;
+    if (numberIsValid) {
+      this.attributes.playerCount = requestedNumber;
+      this.handler.state = GAME_STATES.PLAYER_NAME;
+    }
 
     // response
-    this.emit(':ask', res.whatIsYourName('one'));
+    if (numberIsValid) {
+      this.emit(':ask', res.whatIsYourName(numberToWord[1]));
+    } else {
+      this.emit(':ask', res.maxPlayers());
+    }
   },
   Unhandled() {
     this.emit(':ask', res.numberPrompt(), res.numberPrompt());

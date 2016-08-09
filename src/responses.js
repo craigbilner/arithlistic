@@ -3,7 +3,7 @@
 'use strict';
 
 module.exports.welcome = () =>
-  `Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer within one minute, would you like to play?`;
+  'Welcome to Arithlistic, I will ask you as many maths quiz questions as you can answer within one minute, would you like to play?';
 
 module.exports.welcomePrompt = () =>
   'Your only options are yes or no, there\'s no red or blue pill';
@@ -12,7 +12,10 @@ module.exports.welcomeFail = () =>
   'That\'s unfortunate, you\'re missing out....';
 
 module.exports.howManyPlayers = () =>
-  `How many players will there be?`;
+  'How many players will there be?';
+
+module.exports.maxPlayers = () =>
+  'This game is for a maximum of four players, please choose between one and four players';
 
 module.exports.numberPrompt = () =>
   'Try saying, one player, just me, or, two players, three players etc.';

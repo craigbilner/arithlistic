@@ -9,6 +9,7 @@ const prestartNoIntent = require('./event-samples/prestart/no.intent');
 const invalidYesNoIntent = require('./event-samples/prestart/invalid-yesno.intent');
 const onePlayerIntent = require('./event-samples/player-number/one-player.intent');
 const threePlayerIntent = require('./event-samples/player-number/three-player.intent');
+const tenPlayerIntent = require('./event-samples/player-number/ten-player.intent');
 const nameIntent = require('./event-samples/player-name/name.intent');
 const invalidNameIntent = require('./event-samples/player-name/invalid-name.intent');
 const name1Intent = require('./event-samples/player-name/name1.intent');
@@ -43,6 +44,7 @@ const {
   noHelp,
   noRepeats,
   keepPlaying,
+  maxPlayers,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -91,7 +93,7 @@ describe('Alexa, start game', () => {
         }));
 
     describe('One player', () => {
-      it('Sets the player count and asks the players name', () =>
+      it('Sets the player count and asks the player\'s name', () =>
         runIntent(onePlayerIntent)
           .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
@@ -100,7 +102,7 @@ describe('Alexa, start game', () => {
           }));
 
       describe('My name is Inigo Montoya', () => {
-        it('Save name, start the game and ask Inigo Montoya the first question', () =>
+        it('Saves name, start the game and ask Inigo Montoya the first question', () =>
           runIntent(nameIntent)
             .then(({ outputSpeech, gameState, players, startTime, currentAnswer, activePlayer }) => {
               assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash in ' +
@@ -113,7 +115,7 @@ describe('Alexa, start game', () => {
             }));
 
         describe('The answer is five', () => {
-          it('Score game, say answer is wrong and ask the next question', () =>
+          it('Scores game, says answer is wrong and asks the next question', () =>
             runIntent(firstAnswerIntent)
               .then(({ outputSpeech, gameState, players, activePlayer }) => {
                 assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
@@ -126,7 +128,7 @@ describe('Alexa, start game', () => {
               }));
 
           describe('The answer is ten', () => {
-            it('Score game, say answer is right and ask the next question', () =>
+            it('Scores game, says answer is right and asks the next question', () =>
               runIntent(secondAnswerIntent)
                 .then(({ outputSpeech, gameState, players, activePlayer }) => {
                   assert.deepEqual(outputSpeech, 'Correct for 286 points. What is the ' +
@@ -138,7 +140,7 @@ describe('Alexa, start game', () => {
                 }));
 
             describe('The answer is nine', () => {
-              it('raises the question difficulty after four correct answers', () =>
+              it('Raises the question difficulty after four correct answers', () =>
                 runIntent(fourthCorrectAnswerIntent)
                   .then(({ outputSpeech }) => {
                     assert.deepEqual(outputSpeech, 'Correct for 286 points. What is light air ' +
@@ -147,7 +149,7 @@ describe('Alexa, start game', () => {
                   }));
 
               describe('The answer is fifteen', () => {
-                it('raises the question difficulty after six correct answers', () =>
+                it('Raises the question difficulty after six correct answers', () =>
                   runIntent(sixthCorrectAnswerIntent)
                     .then(({ outputSpeech }) => {
                       assert.deepEqual(outputSpeech, 'Correct for 286 points. What is a ' +
@@ -159,7 +161,7 @@ describe('Alexa, start game', () => {
             });
 
             describe('The answer is seven', () => {
-              it('End game after it has lasted more than a minute', () =>
+              it('Ends game after it has lasted more than two minutes', () =>
                 runIntent(thirdAnswerIntent)
                   .then(({ outputSpeech, gameState }) => {
                     assert.deepEqual(outputSpeech, 'GAME OVER. You scored 613 points.');
@@ -199,7 +201,7 @@ describe('Alexa, start game', () => {
         });
 
         describe('Can you repeat that', () => {
-          it('Inform the player there are no repeats', () =>
+          it('Informs the player there are no repeats', () =>
             runIntent(repeat)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, noRepeats());
@@ -207,7 +209,7 @@ describe('Alexa, start game', () => {
         });
 
         describe('Just start again', () => {
-          it('Go back to the game intro', () =>
+          it('Goes back to the game intro', () =>
             runIntent(startOver)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, welcome());
@@ -215,7 +217,7 @@ describe('Alexa, start game', () => {
         });
 
         describe('Stop it!', () => {
-          it('Ask if the player would like to keep playing', () =>
+          it('Asks if the player would like to keep playing', () =>
             runIntent(stop)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, keepPlaying());
@@ -223,7 +225,7 @@ describe('Alexa, start game', () => {
         });
 
         describe('Bla bla bla', () => {
-          it('Tell the player how to answer a question', () =>
+          it('Tells the player how to answer a question', () =>
             runIntent(invalidAnswer)
               .then(({ outputSpeech }) => {
                 assert.deepEqual(outputSpeech, tryANumber());
@@ -232,7 +234,7 @@ describe('Alexa, start game', () => {
       });
 
       describe('Inigo Montoya is my name', () => {
-        it('Ask for the same players name again', () =>
+        it('Asks for the same player\'s name again', () =>
           runIntent(invalidNameIntent)
             .then(({ outputSpeech, players }) => {
               assert.deepEqual(outputSpeech, namePrompt());
@@ -241,14 +243,14 @@ describe('Alexa, start game', () => {
       });
 
       describe('Bla bla bla', () => {
-        it('Does something', () =>
+        it('Prompts for the player\'s name again', () =>
           runIntent(invalidNameIntent)
             .then(({ outputSpeech }) => assert.deepEqual(outputSpeech, namePrompt())));
       });
     });
 
     describe('Three players', () => {
-      it('Sets the player count and asks the first players name', () =>
+      it('Sets the player count and asks the first player\'s name', () =>
         runIntent(threePlayerIntent)
           .then(({ outputSpeech, gameState, playerCount }) => {
             assert.deepEqual(outputSpeech, sanitise(whatIsYourName('one')));
@@ -257,7 +259,7 @@ describe('Alexa, start game', () => {
           }));
 
       describe('My name is Inigo Montoya', () => {
-        it('Set the player and asks the second players name', () =>
+        it('Sets the player and asks the second player\'s name', () =>
           runIntent(name1Intent)
             .then(({ outputSpeech, gameState, players }) => {
               assert.deepEqual(outputSpeech, sanitise(whatIsYourName('two')));
@@ -270,7 +272,7 @@ describe('Alexa, start game', () => {
             }));
 
         describe('My name is Prince Humperdinck', () => {
-          it('Sets the player and asks the third players name', () =>
+          it('Sets the player and asks the third player\'s name', () =>
             runIntent(name2Intent)
               .then(({ outputSpeech, gameState, players }) => {
                 assert.deepEqual(outputSpeech, sanitise(whatIsYourName('three')));
@@ -325,7 +327,7 @@ describe('Alexa, start game', () => {
                 }));
 
             describe('The answer is five', () => {
-              it('Score game, say answer is wrong and ask the next question', () =>
+              it('Scores game, says answer is wrong and asks the next question', () =>
                 runIntent(multiFirstAnswerIntent)
                   .then(({ outputSpeech, gameState, players, activePlayer }) => {
                     assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, 46 ' +
@@ -338,7 +340,7 @@ describe('Alexa, start game', () => {
                   }));
 
               describe('The answer is six', () => {
-                it('Score game, say answer is correct and ask the next question', () =>
+                it('Scores game, says answer is correct and asks the next question', () =>
                   runIntent(multiSecondAnswerIntent)
                     .then(({ outputSpeech, gameState, players, activePlayer }) => {
                       assert.deepEqual(outputSpeech, 'Correct for 286 points. Fezzik, what is ' +
@@ -350,7 +352,7 @@ describe('Alexa, start game', () => {
                     }));
 
                 describe('The answer is eight', () => {
-                  it('Score game, say answer is incorrect and ask the next question', () =>
+                  it('Scores game, says answer is incorrect and asks the next question', () =>
                     runIntent(multiThirdAnswerIntent)
                       .then(({ outputSpeech, gameState, players, activePlayer }) => {
                         assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
@@ -363,7 +365,7 @@ describe('Alexa, start game', () => {
                       }));
 
                   describe('The answer is ten', () => {
-                    it('Score game, say answer is correct and ask the next question', () =>
+                    it('Scores game, says answer is correct and asks the next question', () =>
                       runIntent(multiFourthAnswerIntent)
                         .then(({ outputSpeech, gameState, players }) => {
                           assert.deepEqual(outputSpeech, 'Correct for 299 points. Prince ' +
@@ -375,7 +377,7 @@ describe('Alexa, start game', () => {
                         }));
 
                     describe('The answer is seven', () => {
-                      it('End game after it has lasted more than a minute', () =>
+                      it('Ends game after it has lasted more than two minutes', () =>
                         runIntent(multiFifthAnswerIntent)
                           .then(({ outputSpeech, gameState }) => {
                             assert.deepEqual(outputSpeech, 'GAME OVER. Inigo Montoya is the ' +
@@ -392,10 +394,19 @@ describe('Alexa, start game', () => {
         });
       });
     });
+
+    describe('Ten players', () => {
+      it('Advises a max of four players and asks again', () =>
+        runIntent(tenPlayerIntent)
+          .then(({ outputSpeech, gameState }) => {
+            assert.deepEqual(outputSpeech, sanitise(maxPlayers()));
+            assert.deepEqual(gameState, GAME_STATES.PLAYER_NUMBER);
+          }));
+    });
   });
 
   describe('No', () => {
-    it('Give unfortunate speech', () =>
+    it('Gives unfortunate speech', () =>
       runIntent(prestartNoIntent)
         .then(({ outputSpeech }) => {
           assert.deepEqual(outputSpeech, welcomeFail());
