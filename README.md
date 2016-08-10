@@ -31,8 +31,14 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 * Can't find any docs on `emitWithState` but what it actually means is, "call an internal intent"
 * Keep the handlers granular to make the failure intents much easier to capture and manage, and especially with more ambiguous intents such as "yes" and "no"
 * Be careful with one words intents; for example my "Pass" intent was getting triggered whether you say "pass", "bla" or "blub"
+* They're quite strict on the help, cancel and stop intents. I've gone for a mixin approach so I don't need to write them out for every handler and refactored my responses so they store last known state to pick up from after "pausing" the game with a stop intent
 
 ## Tips:
+
+### General
+
+* Put all responses in a central place to make testing and refactoring easier...and possibly i18n further down the line...
+* The code can get a little messy - keep every intent as clean and clear as possible by splitting up "session updates" and "responses"
 
 ### Testing:
 
