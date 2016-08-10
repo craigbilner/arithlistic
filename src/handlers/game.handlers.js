@@ -22,7 +22,7 @@ function getAndEmitQuestion(response, player, opts) {
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
   // response
-  this.emit(':ask', response(quizItem.question, player, opts));
+  res.ask.call(this, response(quizItem.question, player, opts));
 }
 
 const gameHasFinished = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
@@ -94,13 +94,13 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
     this.emitWithState('GameIntro');
   },
   'AMAZON.RepeatIntent': function() {
-    this.emit(':ask', res.noRepeats());
+    res.ask.call(this, res.noRepeats());
   },
   'AMAZON.HelpIntent': function() {
-    this.emit(':ask', res.noHelp());
+    res.ask.call(this, res.noHelp());
   },
   Unhandled() {
-    this.emit(':ask', res.tryANumber());
+    res.ask.call(this, res.tryANumber());
   },
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PLAYING} ended: ${this.event.request.reason}`);

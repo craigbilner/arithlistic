@@ -8,7 +8,7 @@ const res = require('../responses');
 
 module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, mixinHandlers(coreHandlers, {
   GameIntro() {
-    this.emit(':ask', res.welcome());
+    res.ask.call(this, res.welcome());
   },
   'AMAZON.YesIntent': function() {
     // updates
@@ -16,16 +16,16 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, mixinHandlers(co
     this.attributes.players = [];
 
     // response
-    this.emit(':ask', res.howManyPlayers());
+    res.ask.call(this, res.howManyPlayers());
   },
   'AMAZON.NoIntent': function() {
     this.emit(':tell', res.welcomeFail());
   },
   'AMAZON.HelpIntent': function() {
-    this.emit(':ask', res.welcomeHelp(), res.welcomeHelp());
+    res.ask.call(this, res.welcomeHelp(), res.welcomeHelp());
   },
   Unhandled() {
-    this.emit(':ask', res.welcomePrompt(), res.welcomePrompt());
+    res.ask.call(this, res.welcomePrompt(), res.welcomePrompt());
   },
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PRESTART} ended: ${this.event.request.reason}`);

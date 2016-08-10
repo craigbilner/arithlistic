@@ -43,14 +43,14 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, mixinHandlers
       if (lastPlayerName) {
         this.emitWithState('AskQuestion');
       } else {
-        this.emit(':ask', res.whatIsYourName(numberToWord[this.attributes.players.length + 1]));
+        res.ask.call(this, res.whatIsYourName(numberToWord[this.attributes.players.length + 1]));
       }
     } else {
       this.emitWithState('Unhandled');
     }
   },
   Unhandled() {
-    this.emit(':ask', res.namePrompt(), res.namePrompt());
+    res.ask.call(this, res.namePrompt(), res.namePrompt());
   },
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PLAYER_NAME} ended: ${this.event.request.reason}`);

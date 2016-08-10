@@ -20,7 +20,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, mixinHandle
     this.handler.state = GAME_STATES.PLAYER_NAME;
 
     // response
-    this.emit(':ask', res.whatIsYourName(numberToWord[1]));
+    res.ask.call(this, res.whatIsYourName(numberToWord[1]));
   },
   PlayerNumberIntent() {
     const requestedNumber = parseInt(this.event.request.intent.slots.Players.value, 10);
@@ -34,13 +34,13 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, mixinHandle
 
     // response
     if (numberIsValid) {
-      this.emit(':ask', res.whatIsYourName(numberToWord[1]));
+      res.ask.call(this, res.whatIsYourName(numberToWord[1]));
     } else {
-      this.emit(':ask', res.maxPlayers());
+      res.ask.call(this, res.maxPlayers());
     }
   },
   Unhandled() {
-    this.emit(':ask', res.numberPrompt(), res.numberPrompt());
+    res.ask.call(this, res.numberPrompt(), res.numberPrompt());
   },
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PLAYER_NUMBER} ended: ${this.event.request.reason}`);

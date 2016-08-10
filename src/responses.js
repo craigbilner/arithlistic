@@ -90,3 +90,16 @@ const getEndText = players => {
 
 module.exports.gameOver = players =>
   `GAME OVER. ${getEndText(players)}`;
+
+module.exports.ask = function(sayWhat) {
+  // updates
+  this.attributes.previousState = this.handler.state;
+  this.attributes.previousResponse = sayWhat;
+
+  // response
+  this.emit(':ask', sayWhat);
+};
+
+module.exports.tell = function(tellWhat) {
+  this.emit(':tell', tellWhat);
+};
