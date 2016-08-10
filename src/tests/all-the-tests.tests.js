@@ -6,6 +6,7 @@ const context = require('aws-lambda-mock-context');
 const sessionStartIntent = require('./event-samples/new-session/session-start.intent');
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const prestartNoIntent = require('./event-samples/prestart/no.intent');
+const prestartHelpIntent = require('./event-samples/prestart/help.intent');
 const invalidYesNoIntent = require('./event-samples/prestart/invalid-yesno.intent');
 const onePlayerIntent = require('./event-samples/player-number/one-player.intent');
 const threePlayerIntent = require('./event-samples/player-number/three-player.intent');
@@ -45,6 +46,7 @@ const {
   noRepeats,
   keepPlaying,
   maxPlayers,
+  welcomeHelp,
 } = require('../responses');
 const { GAME_STATES } = require('../enums');
 
@@ -410,6 +412,14 @@ describe('Alexa, start game', () => {
       runIntent(prestartNoIntent)
         .then(({ outputSpeech }) => {
           assert.deepEqual(outputSpeech, welcomeFail());
+        }));
+  });
+
+  describe('Help', () => {
+    it('Explains the game further', () =>
+      runIntent(prestartHelpIntent)
+        .then(({ outputSpeech }) => {
+          assert.deepEqual(outputSpeech, welcomeHelp());
         }));
   });
 

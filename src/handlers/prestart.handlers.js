@@ -19,6 +19,9 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PRESTART, {
   'AMAZON.NoIntent': function() {
     this.emit(':tell', res.welcomeFail());
   },
+  'AMAZON.HelpIntent': function() {
+    this.emit(':ask', res.welcomeHelp(), res.welcomeHelp());
+  },
   Unhandled() {
     this.emit(':ask', res.welcomePrompt(), res.welcomePrompt());
   },
