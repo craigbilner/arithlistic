@@ -13,11 +13,15 @@ const invalidYesNoIntent = require('./event-samples/prestart/invalid-yesno.inten
 const onePlayerIntent = require('./event-samples/player-number/one-player.intent');
 const threePlayerIntent = require('./event-samples/player-number/three-player.intent');
 const tenPlayerIntent = require('./event-samples/player-number/ten-player.intent');
+const playerNumberCancelIntent = require('./event-samples/player-number/cancel.intent');
+const playerNumberStopIntent = require('./event-samples/player-number/stop.intent');
 const nameIntent = require('./event-samples/player-name/name.intent');
 const invalidNameIntent = require('./event-samples/player-name/invalid-name.intent');
 const name1Intent = require('./event-samples/player-name/name1.intent');
 const name2Intent = require('./event-samples/player-name/name2.intent');
 const name3Intent = require('./event-samples/player-name/name3.intent');
+const playerNameCancelIntent = require('./event-samples/player-name/cancel.intent');
+const playerNameStopIntent = require('./event-samples/player-name/stop.intent');
 const firstAnswerIntent = require('./event-samples/game/answer.intent');
 const secondAnswerIntent = require('./event-samples/game/answer2.intent');
 const thirdAnswerIntent = require('./event-samples/game/answer3.intent');
@@ -179,8 +183,9 @@ describe('Alexa, start game', () => {
         describe('Cancel', () => {
           it('Cancels the game', () =>
             runIntent(cancel)
-              .then(({ outputSpeech }) => {
+              .then(({ outputSpeech, endOfSession }) => {
                 assert.deepEqual(outputSpeech, goodbye());
+                assert(endOfSession);
               }));
         });
 
@@ -224,8 +229,9 @@ describe('Alexa, start game', () => {
         describe('Stop it!', () => {
           it('Asks if the player would like to keep playing', () =>
             runIntent(stop)
-              .then(({ outputSpeech }) => {
+              .then(({ outputSpeech, endOfSession }) => {
                 assert.deepEqual(outputSpeech, keepPlaying());
+                assert(!endOfSession);
               }));
         });
 
@@ -251,6 +257,24 @@ describe('Alexa, start game', () => {
         it('Prompts for the player\'s name again', () =>
           runIntent(invalidNameIntent)
             .then(({ outputSpeech }) => assert.deepEqual(outputSpeech, namePrompt())));
+      });
+
+      describe('Cancel', () => {
+        it('Cancels the game', () =>
+          runIntent(playerNameCancelIntent)
+            .then(({ outputSpeech, endOfSession }) => {
+              assert.deepEqual(outputSpeech, goodbye());
+              assert(endOfSession);
+            }));
+      });
+
+      describe('Stop', () => {
+        it('Asks if the player would like to keep playing', () =>
+          runIntent(playerNameStopIntent)
+            .then(({ outputSpeech, endOfSession }) => {
+              assert.deepEqual(outputSpeech, keepPlaying());
+              assert(!endOfSession);
+            }));
       });
     });
 
@@ -408,6 +432,24 @@ describe('Alexa, start game', () => {
             assert.deepEqual(gameState, GAME_STATES.PLAYER_NUMBER);
           }));
     });
+
+    describe('Cancel', () => {
+      it('Cancels the game', () =>
+        runIntent(playerNumberCancelIntent)
+          .then(({ outputSpeech, endOfSession }) => {
+            assert.deepEqual(outputSpeech, goodbye());
+            assert(endOfSession);
+          }));
+    });
+
+    describe('Stop', () => {
+      it('Asks if the player would like to keep playing', () =>
+        runIntent(playerNumberStopIntent)
+          .then(({ outputSpeech, endOfSession }) => {
+            assert.deepEqual(outputSpeech, keepPlaying());
+            assert(!endOfSession);
+          }));
+    });
   });
 
   describe('No', () => {
@@ -436,7 +478,7 @@ describe('Alexa, start game', () => {
   });
 
   describe('Stop', () => {
-    it('Stops the game', () =>
+    it('Asks if the player would like to keep playing', () =>
       runIntent(prestartStopIntent)
         .then(({ outputSpeech, endOfSession }) => {
           assert.deepEqual(outputSpeech, keepPlaying());

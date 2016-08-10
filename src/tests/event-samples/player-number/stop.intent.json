@@ -1,0 +1,27 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "STATE": "PLAYER_NUMBER",
+      "players": []
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-30T23:40:59Z",
+    "intent": {
+      "name": "AMAZON.StopIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

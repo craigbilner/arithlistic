@@ -1,0 +1,28 @@
+{
+  "session": {
+    "sessionId": "sessionId",
+    "application": {
+      "applicationId": "appId"
+    },
+    "attributes": {
+      "STATE": "PLAYER_NAME",
+      "players": [],
+      "playerCount": 1
+    },
+    "user": {
+      "userId": "userId"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "reqId",
+    "locale": "en-US",
+    "timestamp": "2016-07-31T00:06:26Z",
+    "intent": {
+      "name": "AMAZON.CancelIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}
