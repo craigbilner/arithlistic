@@ -32,6 +32,7 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 * Keep the handlers granular to make the failure intents much easier to capture and manage, and especially with more ambiguous intents such as "yes" and "no"
 * Be careful with one words intents; for example my "Pass" intent was getting triggered whether you say "pass", "bla" or "blub"
 * They're quite strict on the help, cancel and stop intents. I've gone for a mixin approach so I don't need to write them out for every handler and refactored my responses so they store last known state to pick up from after "pausing" the game with a stop intent
+* If you like to use ES2015 proper (virtue of node 6.x) and you write your tests with it (like I perhaps foolishly have), use [nvm](https://github.com/creationix/nvm) to be able to swap back to 4.3.2 in order to smoke test the skill code with [lambda-local](https://www.npmjs.com/package/lambda-local)
 
 ## Tips:
 
