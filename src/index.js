@@ -8,6 +8,7 @@ const prestartHandlers = require('./handlers/prestart.handlers');
 const playerNumberHandlers = require('./handlers/player-number.handlers');
 const playerNameHandlers = require('./handlers/player-name.handlers');
 const gameHandlers = require('./handlers/game.handlers');
+const stoppedHandlers = require('./handlers/stopped.handlers');
 
 module.exports.handler = function (event, context) {
   const alexa = Alexa.handler(event, context);
@@ -18,7 +19,8 @@ module.exports.handler = function (event, context) {
     prestartHandlers,
     playerNumberHandlers,
     playerNameHandlers,
-    gameHandlers
+    gameHandlers,
+    stoppedHandlers
   );
   alexa.execute();
 };
