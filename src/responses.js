@@ -50,6 +50,9 @@ module.exports.tryANumber = () =>
 module.exports.keepPlaying = () =>
   'Would you like to keep playing?';
 
+module.exports.yesOrNo = () =>
+  'So is that a yes or a no...?';
+
 module.exports.goodbye = () =>
   'Ok, let\'s play again soon.';
 

@@ -15,4 +15,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.STOPPED, {
   'AMAZON.NoIntent': function() {
     this.emit(':tell', res.goodbye());
   },
+  Unhandled() {
+    this.emit(':ask', res.yesOrNo());
+  },
 });
