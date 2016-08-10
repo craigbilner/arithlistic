@@ -7,6 +7,8 @@ const sessionStartIntent = require('./event-samples/new-session/session-start.in
 const prestartYesIntent = require('./event-samples/prestart/yes.intent');
 const prestartNoIntent = require('./event-samples/prestart/no.intent');
 const prestartHelpIntent = require('./event-samples/prestart/help.intent');
+const prestartCancelIntent = require('./event-samples/prestart/cancel.intent');
+const prestartStopIntent = require('./event-samples/prestart/stop.intent');
 const invalidYesNoIntent = require('./event-samples/prestart/invalid-yesno.intent');
 const onePlayerIntent = require('./event-samples/player-number/one-player.intent');
 const threePlayerIntent = require('./event-samples/player-number/three-player.intent');
@@ -64,6 +66,7 @@ const runIntent = intent => new Promise(res => {
     .then(obj => {
       // console.log(obj);
       res({
+        endOfSession: obj.response.shouldEndSession,
         outputSpeech: getOutputSpeech(obj),
         gameState: getAttribute(obj, 'STATE'),
         playerCount: getAttribute(obj, 'playerCount'),
@@ -420,6 +423,24 @@ describe('Alexa, start game', () => {
       runIntent(prestartHelpIntent)
         .then(({ outputSpeech }) => {
           assert.deepEqual(outputSpeech, welcomeHelp());
+        }));
+  });
+
+  describe('Cancel', () => {
+    it('Cancels the game', () =>
+      runIntent(prestartCancelIntent)
+        .then(({ outputSpeech, endOfSession }) => {
+          assert.deepEqual(outputSpeech, goodbye());
+          assert(endOfSession);
+        }));
+  });
+
+  describe('Stop', () => {
+    it('Stops the game', () =>
+      runIntent(prestartStopIntent)
+        .then(({ outputSpeech, endOfSession }) => {
+          assert.deepEqual(outputSpeech, keepPlaying());
+          assert(!endOfSession);
         }));
   });
 

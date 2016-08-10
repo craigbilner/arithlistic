@@ -1,6 +1,8 @@
 'use strict';
 
 const Alexa = require('alexa-sdk');
+const coreHandlers = require('./core.handlers');
+const mixinHandlers = require('../modules/utils').mixinHandlers;
 const GAME_STATES = require('../enums').GAME_STATES;
 const res = require('../responses');
 
@@ -11,7 +13,7 @@ const numberToWord = {
   4: 'four',
 };
 
-module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, {
+module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, mixinHandlers(coreHandlers, {
   PlayerNumberSoloIntent() {
     // updates
     this.attributes.playerCount = 1;
@@ -43,4 +45,4 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NUMBER, {
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PLAYER_NUMBER} ended: ${this.event.request.reason}`);
   },
-});
+}));

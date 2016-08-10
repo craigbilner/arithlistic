@@ -6,3 +6,5 @@ module.exports.randomNumber = (seed, min, max) => ({
   seed: seed + 1,
   value: Math.floor(seedrandom(seed.toString())() * (max - min)) + min,
 });
+
+module.exports.mixinHandlers = (mixin, handler) => Object.assign({}, mixin, handler);

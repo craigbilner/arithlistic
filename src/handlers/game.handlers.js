@@ -1,6 +1,8 @@
 'use strict';
 
 const Alexa = require('alexa-sdk');
+const coreHandlers = require('./core.handlers');
+const mixinHandlers = require('../modules/utils').mixinHandlers;
 const GAME_STATES = require('../enums').GAME_STATES;
 const res = require('../responses');
 const getQuestion = require('../modules/get-question');
@@ -25,7 +27,7 @@ function getAndEmitQuestion(response, player, opts) {
 
 const gameHasFinished = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
 
-module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
+module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(coreHandlers, {
   AskQuestion() {
     // updates
     this.attributes.startTime = this.event.request.timestamp;
@@ -97,16 +99,10 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, {
   'AMAZON.HelpIntent': function() {
     this.emit(':ask', res.noHelp());
   },
-  'AMAZON.StopIntent': function() {
-    this.emit(':ask', res.keepPlaying());
-  },
-  'AMAZON.CancelIntent': function() {
-    this.emit(':tell', res.goodbye());
-  },
   Unhandled() {
     this.emit(':ask', res.tryANumber());
   },
   SessionEndedRequest() {
     console.log(`${GAME_STATES.PLAYING} ended: ${this.event.request.reason}`);
   },
-});
+}));
