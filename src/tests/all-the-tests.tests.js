@@ -139,7 +139,7 @@ describe('Alexa, start game', () => {
                 assert.deepEqual(players[0].correctAnswers, 0);
                 assert.deepEqual(activePlayer, 0);
                 assert.deepEqual(previousResponse, 'What is the atomic number of, hydrogen, ' +
-                  'plus, George Washington\'s presidency?')
+                  'plus, George Washington\'s presidency?');
               }));
 
           describe('The answer is ten', () => {
@@ -216,7 +216,7 @@ describe('Alexa, start game', () => {
                 assert.deepEqual(players[0].score, 0);
                 assert.deepEqual(previousResponse, 'What is the number of years, for a ' +
                   'leather wedding anniversary, plus, the number of the herculean labour where ' +
-                  'he, captures the ceryneian hind?')
+                  'he, captures the ceryneian hind?');
               }));
         });
 
@@ -444,7 +444,7 @@ describe('Alexa, start game', () => {
                     assert.deepEqual(players[0].score, 0);
                     assert.deepEqual(previousResponse, 'What is the number of years, for a ' +
                       'leather wedding anniversary, plus, the number of the herculean labour where ' +
-                      'he, captures the ceryneian hind?')
+                      'he, captures the ceryneian hind?');
                   }));
             });
           });
