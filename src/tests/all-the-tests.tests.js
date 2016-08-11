@@ -33,7 +33,8 @@ const multiFifthAnswerIntent = require('./event-samples/game/multip-answer5.inte
 const invalidAnswer = require('./event-samples/game/blablabla.intent');
 const fourthCorrectAnswerIntent = require('./event-samples/game/fourth-correct-answer.intent');
 const sixthCorrectAnswerIntent = require('./event-samples/game/sixth-correct-answer.intent');
-const pass = require('./event-samples/game/pass.intent');
+const singlePlayerPass = require('./event-samples/game/single-player-pass.intent');
+const multiplayerPass = require('./event-samples/game/multiplayer-pass.intent');
 const cancel = require('./event-samples/game/cancel.intent');
 const help = require('./event-samples/game/help.intent');
 const repeat = require('./event-samples/game/repeat.intent');
@@ -77,6 +78,7 @@ const runIntent = intent => new Promise(res => {
         activePlayer: getAttribute(obj, 'activePlayer'),
         startTime: getAttribute(obj, 'startTime'),
         currentAnswer: getAttribute(obj, 'currentAnswer'),
+        previousResponse: getAttribute(obj, 'previousResponse'),
       });
     })
     .catch(err => {
@@ -110,22 +112,25 @@ describe('Alexa, start game', () => {
           }));
 
       describe('My name is Inigo Montoya', () => {
-        it('Saves name, start the game and ask Inigo Montoya the first question', () =>
+        it('Saves name, start the game and asks Inigo Montoya the first question', () =>
           runIntent(nameIntent)
-            .then(({ outputSpeech, gameState, players, startTime, currentAnswer, activePlayer }) => {
-              assert.deepEqual(outputSpeech, 'Inigo Montoya, what is dash dash dash dash dash in ' +
-                'morse code, minus, the number of years, for a cotton wedding anniversary?');
+            .then(({ outputSpeech, gameState, players, startTime, currentAnswer, activePlayer, previousResponse }) => {
+              const expectedOutput = 'Inigo Montoya, what is dash dash dash dash dash in ' +
+                'morse code, minus, the number of years, for a cotton wedding anniversary?';
+              assert.deepEqual(outputSpeech, expectedOutput);
               assert.deepEqual(gameState, GAME_STATES.PLAYING);
               assert.deepEqual(players[0].name, 'Inigo Montoya');
               assert.deepEqual(startTime, '2016-07-31T00:06:26Z');
               assert.deepEqual(currentAnswer, -1);
               assert.deepEqual(activePlayer, 0);
+              assert.deepEqual(previousResponse, 'What is dash dash dash dash dash in ' +
+                'morse code, minus, the number of years, for a cotton wedding anniversary?');
             }));
 
         describe('The answer is five', () => {
           it('Scores game, says answer is wrong and asks the next question', () =>
             runIntent(firstAnswerIntent)
-              .then(({ outputSpeech, gameState, players, activePlayer }) => {
+              .then(({ outputSpeech, gameState, players, activePlayer, previousResponse }) => {
                 assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, ' +
                   '46 points. What is the atomic number of, hydrogen, plus, ' +
                   'George Washington\'s presidency?');
@@ -133,18 +138,22 @@ describe('Alexa, start game', () => {
                 assert.deepEqual(players[0].score, 46);
                 assert.deepEqual(players[0].correctAnswers, 0);
                 assert.deepEqual(activePlayer, 0);
+                assert.deepEqual(previousResponse, 'What is the atomic number of, hydrogen, ' +
+                  'plus, George Washington\'s presidency?')
               }));
 
           describe('The answer is ten', () => {
             it('Scores game, says answer is right and asks the next question', () =>
               runIntent(secondAnswerIntent)
-                .then(({ outputSpeech, gameState, players, activePlayer }) => {
+                .then(({ outputSpeech, gameState, players, activePlayer, previousResponse }) => {
                   assert.deepEqual(outputSpeech, 'Correct for 286 points. What is the ' +
                     'atomic number of, hydrogen, plus, George Washington\'s presidency?');
                   assert.deepEqual(gameState, GAME_STATES.PLAYING);
                   assert.deepEqual(players[0].score, 332);
                   assert.deepEqual(players[0].correctAnswers, 1);
                   assert.deepEqual(activePlayer, 0);
+                  assert.deepEqual(previousResponse, 'What is the atomic number of, hydrogen, ' +
+                    'plus, George Washington\'s presidency?');
                 }));
 
             describe('The answer is nine', () => {
@@ -198,14 +207,16 @@ describe('Alexa, start game', () => {
 
         describe('Pass', () => {
           it('Asks the next question without a score', () =>
-            runIntent(pass)
-              .then(({ outputSpeech, players }) => {
+            runIntent(singlePlayerPass)
+              .then(({ outputSpeech, players, previousResponse }) => {
                 assert.deepEqual(outputSpeech, 'I\'ll take that as a pass. The correct answer ' +
-                  'was -1. dick, what is the number of years, for a leather wedding anniversary,' +
+                  'was -1. What is the number of years, for a leather wedding anniversary,' +
                   ' plus, the number of the herculean labour where he, ' +
                   'captures the ceryneian hind?');
-
                 assert.deepEqual(players[0].score, 0);
+                assert.deepEqual(previousResponse, 'What is the number of years, for a ' +
+                  'leather wedding anniversary, plus, the number of the herculean labour where ' +
+                  'he, captures the ceryneian hind?')
               }));
         });
 
@@ -357,7 +368,7 @@ describe('Alexa, start game', () => {
             describe('The answer is five', () => {
               it('Scores game, says answer is wrong and asks the next question', () =>
                 runIntent(multiFirstAnswerIntent)
-                  .then(({ outputSpeech, gameState, players, activePlayer }) => {
+                  .then(({ outputSpeech, gameState, players, activePlayer, previousResponse }) => {
                     assert.deepEqual(outputSpeech, 'Incorrect, the answer was 6, you score, 46 ' +
                       'points. Prince Humperdinck, what is the atomic number of, hydrogen, plus, ' +
                       'George Washington\'s presidency?');
@@ -365,6 +376,8 @@ describe('Alexa, start game', () => {
                     assert.deepEqual(players[0].score, 46);
                     assert.deepEqual(players[0].correctAnswers, 0);
                     assert.deepEqual(activePlayer, 1);
+                    assert.deepEqual(previousResponse, 'What is the ' +
+                      'atomic number of, hydrogen, plus, George Washington\'s presidency?');
                   }));
 
               describe('The answer is six', () => {
@@ -417,6 +430,22 @@ describe('Alexa, start game', () => {
                   });
                 });
               });
+            });
+
+            describe('Pass', () => {
+              it('Asks the next question without a score', () =>
+                runIntent(multiplayerPass)
+                  .then(({ outputSpeech, players, previousResponse }) => {
+                    assert.deepEqual(outputSpeech, 'I\'ll take that as a pass. The correct answer ' +
+                      'was -1. dick, what is the number of years, for a leather wedding anniversary,' +
+                      ' plus, the number of the herculean labour where he, ' +
+                      'captures the ceryneian hind?');
+
+                    assert.deepEqual(players[0].score, 0);
+                    assert.deepEqual(previousResponse, 'What is the number of years, for a ' +
+                      'leather wedding anniversary, plus, the number of the herculean labour where ' +
+                      'he, captures the ceryneian hind?')
+                  }));
             });
           });
         });

@@ -22,7 +22,9 @@ function getAndEmitQuestion(response, player, opts) {
   this.attributes.timeOfLastQuestion = this.event.request.timestamp;
 
   // response
-  res.ask.call(this, response(quizItem.question, player, opts));
+  const continuation =
+    opts && opts.continuation && opts.continuation(quizItem.question, player, opts);
+  res.ask.call(this, response(quizItem.question, player, opts), continuation);
 }
 
 const gameHasFinished = (start, end) => (new Date(end)) - (new Date(start)) > 120000;
@@ -31,9 +33,12 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
   AskQuestion() {
     // updates
     this.attributes.startTime = this.event.request.timestamp;
+    const opts = {
+      continuation: res.askQuestion,
+    };
 
     // response
-    getAndEmitQuestion.call(this, res.askQuestion, this.attributes.players[0]);
+    getAndEmitQuestion.call(this, res.askPlayerQuestion, this.attributes.players[0], opts);
   },
   AnswerIntent() {
     const result = handleUsersAnswer((new Date(this.event.request.timestamp)).getTime(), {
@@ -67,6 +72,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
       this.emit(':tell', res.gameOver(this.attributes.players));
     } else {
       const player = this.attributes.players[this.attributes.activePlayer];
+      result.continuation = res.askQuestion;
 
       getAndEmitQuestion.call(this, res.scoreAndAskQuestion, player, result);
     }
@@ -77,6 +83,8 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
     const player = this.attributes.players[nextPlayerIndx];
     const opts = {
       answer: this.attributes.currentAnswer,
+      continuation: res.askQuestion,
+      playerCount: this.attributes.playerCount,
     };
 
     // updates

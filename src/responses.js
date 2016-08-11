@@ -32,11 +32,17 @@ module.exports.whatIsYourName = number =>
 module.exports.namePrompt = () =>
   'Try saying, my name is, then your name';
 
-module.exports.askQuestion = (question, player) =>
+module.exports.askPlayerQuestion = (question, player) =>
   `${player.name}, what is ${question}?`;
 
-module.exports.passAndAskQuestion = (question, player, opts) =>
-  `I'll take that as a pass. The correct answer was ${opts.answer}. ${player.name}, what is ${question}?`;
+module.exports.askQuestion = question =>
+  `What is ${question}?`;
+
+module.exports.passAndAskQuestion = (question, player, opts) => {
+  const questionPrefix = opts.playerCount > 1 ? `${player.name}, what is` : 'What is';
+
+  return `I'll take that as a pass. The correct answer was ${opts.answer}. ${questionPrefix} ${question}?`;
+};
 
 module.exports.noHelp = () =>
   'Help is for the weak, you shall have none!';
@@ -91,10 +97,10 @@ const getEndText = players => {
 module.exports.gameOver = players =>
   `GAME OVER. ${getEndText(players)}`;
 
-module.exports.ask = function(sayWhat) {
+module.exports.ask = function(sayWhat, continuation) {
   // updates
   this.attributes.previousState = this.handler.state;
-  this.attributes.previousResponse = sayWhat;
+  this.attributes.previousResponse = continuation || sayWhat;
 
   // response
   this.emit(':ask', sayWhat);
