@@ -8,7 +8,7 @@
 
 An alexa skill game involving quiz, lists and maths...could anything be better?
 
-So because the Amazon docs and samples are all a bit...old skool...and aren't aimed at a fully working skill implementation, this is my offering - let me know what you think in the Issues/PR section(s).
+So because the Amazon docs and samples are all a bit...old skool...and aren't aimed at a fully working skill implementation, this is my offering - let me know what you think in the Issues/PR section(s). I'm almost happy with the code now but the magical `this` is still quite upsetting.
 
 ## Features:
 
