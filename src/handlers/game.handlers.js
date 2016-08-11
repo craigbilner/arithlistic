@@ -94,7 +94,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
     this.emitWithState('GameIntro');
   },
   'AMAZON.RepeatIntent': function() {
-    res.ask.call(this, res.noRepeats());
+    res.ask.call(this, this.attributes.previousResponse);
   },
   'AMAZON.HelpIntent': function() {
     res.ask.call(this, res.noHelp());

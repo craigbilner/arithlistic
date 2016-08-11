@@ -38,9 +38,6 @@ module.exports.askQuestion = (question, player) =>
 module.exports.passAndAskQuestion = (question, player, opts) =>
   `I'll take that as a pass. The correct answer was ${opts.answer}. ${player.name}, what is ${question}?`;
 
-module.exports.noRepeats = () =>
-  'There are no repeats, this is a proper game, play on.';
-
 module.exports.noHelp = () =>
   'Help is for the weak, you shall have none!';
 

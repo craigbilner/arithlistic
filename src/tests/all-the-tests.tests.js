@@ -49,7 +49,6 @@ const {
   welcomePrompt,
   goodbye,
   noHelp,
-  noRepeats,
   keepPlaying,
   maxPlayers,
   welcomeHelp,
@@ -214,7 +213,7 @@ describe('Alexa, start game', () => {
           it('Informs the player there are no repeats', () =>
             runIntent(repeat)
               .then(({ outputSpeech }) => {
-                assert.deepEqual(outputSpeech, noRepeats());
+                assert.deepEqual(outputSpeech, 'This is the previous question');
               }));
         });
 

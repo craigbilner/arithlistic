@@ -22,7 +22,8 @@
       "activePlayer": 0,
       "startTime": "2016-08-04T00:01:52Z",
       "timeOfLastQuestion": "2016-08-04T00:01:52Z",
-      "currentAnswer": -1
+      "currentAnswer": -1,
+      "previousResponse": "This is the previous question"
     },
     "user": {
       "userId": "userId"
