@@ -14,4 +14,7 @@ module.exports = {
   'AMAZON.CancelIntent': function() {
     this.emit(':tell', res.goodbye());
   },
+  SessionEndedRequest() {
+    console.log(`${this.handler.state || 'NO_STATE'} ended: ${this.event.request.reason}`);
+  },
 };

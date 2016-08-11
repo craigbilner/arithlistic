@@ -20,7 +20,4 @@ module.exports = {
   Unhandled() {
     console.log('unhandled');
   },
-  SessionEndedRequest() {
-    console.log(`New session ended: ${this.event.request.reason}`);
-  },
 };

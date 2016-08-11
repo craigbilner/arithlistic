@@ -52,7 +52,4 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYER_NAME, mixinHandlers
   Unhandled() {
     res.ask.call(this, res.namePrompt(), res.namePrompt());
   },
-  SessionEndedRequest() {
-    console.log(`${GAME_STATES.PLAYER_NAME} ended: ${this.event.request.reason}`);
-  },
 }));

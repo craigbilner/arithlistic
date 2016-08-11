@@ -18,4 +18,7 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.STOPPED, {
   Unhandled() {
     this.emit(':ask', res.yesOrNo());
   },
+  SessionEndedRequest() {
+    console.log(`${GAME_STATES.STOPPED} ended: ${this.event.request.reason}`);
+  },
 });

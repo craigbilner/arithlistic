@@ -102,7 +102,4 @@ module.exports = Alexa.CreateStateHandler(GAME_STATES.PLAYING, mixinHandlers(cor
   Unhandled() {
     res.ask.call(this, res.tryANumber());
   },
-  SessionEndedRequest() {
-    console.log(`${GAME_STATES.PLAYING} ended: ${this.event.request.reason}`);
-  },
 }));
