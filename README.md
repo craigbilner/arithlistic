@@ -21,7 +21,6 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 
 ## Todo:
 
-* Get the thing published
 * Write tutorial
 * Join up the utterances a bit better as they're sort of in three places, possibly using [alexa-utterances](https://github.com/mreinstein/alexa-utterances)
 
@@ -40,6 +39,8 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 * `<sigh`>They're quite strict on the help, cancel and stop intents. I've gone for a mixin approach so I don't need to write them out for every handler and refactored my responses so they store last known state to pick up from after "pausing" the game with a stop intent. So, even though my first question was an easy "yes" or "no", they still wanted "cancel" to do the same thing as "no"`</sigh>`
 * `<grumble>`I failed the Invocation Name criteria with "quizzy maths list" which AFAICT should pass...but they don't tell you why or suggest alternatives`</grumble>`
 * `<grrrr>`I wanted the game to be hard so didn't allow questions to be repeated, with some whimsical thing saying it's a proper game and you don't get repeats...turns out...repeats are a requirement...`</grrrr>`
+
+It went live 12 August, and according to my metrics, one user played it in the first 24 hours making ~12.4 utterances, I have no idea what that means, but it sounds marvellous.
 
 ## Tips:
 
