@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/craigbilner/arithlistic.svg?style=svg)](https://circleci.com/gh/craigbilner/arithlistic)
+
 # Arithlistic
 
 > What is gypsum on the mohs scale, plus, the atomic number of, helium?
