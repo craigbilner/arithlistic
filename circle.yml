@@ -1,2 +1,5 @@
 general:
   build_dir: src
+machine:
+  node:
+    version: 6.3.1
