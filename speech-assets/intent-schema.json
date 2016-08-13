@@ -50,7 +50,7 @@
       "slots": [
         {
           "name": "Name",
-          "type": "AMAZON.LITERAL"
+          "type": "AMAZON.US_FIRST_NAME"
         }
       ]
     }
