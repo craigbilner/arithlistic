@@ -23,7 +23,6 @@ So because the Amazon docs and samples are all a bit...old skool...and aren't ai
 
 ## Todo:
 
-* Write tutorial
 * Join up the utterances a bit better as they're sort of in three places, possibly using [alexa-utterances](https://github.com/mreinstein/alexa-utterances)
 
 ## Lessons learnt so far...
@@ -66,3 +65,7 @@ document.head.getElementsByTagName('style')[0].sheet.insertRule('.CodeMirror { w
 ```
 
 After making sure it's all working "for real", give it a spin on [Echoism](https://echosim.io/)
+
+### Write up
+
+[Please find the full tutorial here](http://tutorials.pluralsight.com/interesting-apis/alexa-run-this-javascript-app)
